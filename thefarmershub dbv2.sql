@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 21, 2019 at 07:33 PM
+-- Generation Time: Feb 22, 2019 at 11:34 AM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -31,7 +31,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `account` (
   `uid` int(10) NOT NULL,
   `email` varchar(40) DEFAULT NULL,
-  `mobile` int(10) NOT NULL,
+  `phoneNumber` int(10) NOT NULL,
   `password` varchar(40) NOT NULL,
   `language` varchar(40) NOT NULL,
   `fname` varchar(100) NOT NULL,
@@ -40,6 +40,22 @@ CREATE TABLE `account` (
   `dist` varchar(50) NOT NULL,
   `state` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `account`
+--
+
+INSERT INTO `account` (`uid`, `email`, `phoneNumber`, `password`, `language`, `fname`, `lname`, `village`, `dist`, `state`) VALUES
+(26, '', 0, 'd41d8cd98f00b204e9800998ecf8427e', '', '', '', '', '', ''),
+(27, '', 0, 'd41d8cd98f00b204e9800998ecf8427e', '', '', '', '', '', ''),
+(28, '', 0, 'd41d8cd98f00b204e9800998ecf8427e', '', '', '', '', '', ''),
+(29, '', 0, 'd41d8cd98f00b204e9800998ecf8427e', '', '', '', '', '', ''),
+(30, '', 0, 'd41d8cd98f00b204e9800998ecf8427e', '', '', '', '', '', ''),
+(31, 'vishvapatel652@gmail.com', 2147483647, '5f4dcc3b5aa765d61d8327deb882cf99', 'India', 'Vishva', 'Patel', '', 'cs', 'Gujarat'),
+(32, 'vishvapatel652@gmail.com', 2147483647, 'password', 'India', 'Vishva', 'Patel', '', 'cs', 'Gujarat'),
+(33, '17BIT0940@email.com', 2147483647, 'password', 'India', 'jlk', 'hkjhj', '', 'dgfgf', 'Gujarat'),
+(34, '17BIT0940@email.com', 2147483647, 'password', 'India', 'jlk', 'hkjhj', '', 'dgfgf', 'Gujarat'),
+(35, '', 0, '', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -110,7 +126,7 @@ CREATE TABLE `question` (
 -- Indexes for table `account`
 --
 ALTER TABLE `account`
-  ADD PRIMARY KEY (`uid`,`mobile`);
+  ADD PRIMARY KEY (`uid`,`phoneNumber`);
 
 --
 -- Indexes for table `article`
@@ -132,7 +148,7 @@ ALTER TABLE `question`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `uid` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `uid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `article`
