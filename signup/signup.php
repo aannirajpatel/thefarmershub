@@ -1,8 +1,76 @@
+<?php
+$con = mysqli_connect("localhost","root","","thefarmershub");
+
+if (mysqli_connect_errno())
+  {
+  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+  }
+
+if ($_SERVER['REQUEST_METHOD']=="POST" && isset($_POST['fname']))
+{
+
+    $fname = $_POST['fname'];
+    $fname = mysqli_real_escape_string($con,$fname);
+    
+    $lname = stripslashes($_REQUEST['lname']);
+    $lname = mysqli_real_escape_string($con,$lname);
+    
+    $email = stripslashes($_REQUEST['email']);
+    $email = mysqli_real_escape_string($con,$email);
+    
+    $password = stripslashes($_REQUEST['password']);
+    $password = mysqli_real_escape_string($con,$password);
+    
+    $phoneNumber = stripslashes($_REQUEST['phoneNumber']);
+    $phoneNumber = mysqli_real_escape_string($con,$phoneNumber);
+    
+    $language = stripslashes($_REQUEST['language']);
+    $language = mysqli_real_escape_string($con,$language);
+
+    $village = stripslashes($_REQUEST['village']);
+    $village = mysqli_real_escape_string($con,$village);
+    
+    $dist = stripslashes($_REQUEST['dist']);
+    $dist = mysqli_real_escape_string($con,$dist);
+    
+    $state = stripslashes($_REQUEST['state']);
+    $state = mysqli_real_escape_string($con,$state);
+
+    $query = "SELECT * FROM account WHERE (fname='$fname' AND lname='$lname' AND phoneNumber='$phoneNumber')";
+
+    $result = mysqli_query($con, $query);
+
+    if(!$result){
+    $query = "insert into `account` (fname,lname,email,password, phoneNumber,language , village , dist , state ) 
+        VALUES ('$fname', '$lname', '$email', '$password', '$phoneNumber', '$language', '$village', '$dist', '$state')";
+    
+    $result = mysqli_query($con,$query);
+
+    if($result)
+    {
+        echo '
+        <div class="alert alert-success">
+  		<strong>Account created!</strong> Click <a href="../login/login.php">here</a> to login.
+		</div>
+        ';
+    }
+	}
+	else{
+		echo '
+        <div class="alert alert-warning">
+  		<strong>Account already exists!</strong> Click <a href="../login/login.php">here</a> to login if you are a returning user.
+		</div>
+        ';
+	}
+
+}
+?>
+
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>The Farmers Hub</title>
+    <title>Signup - TFH</title>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -17,7 +85,7 @@
 <body>
 <div class="container">
             <form class="form-horizontal" role="form" action="" method="POST">
-                <h2>Sign Up</h2>
+                <h2>Sign Up for The Farmer's Hub</h2>
                 <div class="form-group">
                     <label for="fname" class="col-sm-3 control-label">First Name </label>
                     <div class="col-sm-9">
@@ -52,13 +120,13 @@
                <div class="form-group">
                     <label for="language" class="col-sm-3 control-label">Language</label>
                     <div class="col-sm-9">
-                        <input type="text" name="language" placeholder="language" class="form-control">
+                        <input type="text" name="language" placeholder="Language" class="form-control">
                     </div>
                 </div>
                <div class="form-group">
                     <label for="village" class="col-sm-3 control-label">Village</label>
                     <div class="col-sm-9">
-                        <input type="text" name="village" placeholder="village" class="form-control">
+                        <input type="text" name="village" placeholder="Village" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -85,57 +153,7 @@
             </form> <!-- /form -->
         </div> <!-- ./container --> 
 
-<?php
-$con = mysqli_connect("localhost","root","","thefarmershub");
 
-if (mysqli_connect_errno())
-  {
-  echo "Failed to connect to MySQL: " . mysqli_connect_error();
-  }
-
-if ($_SERVER['REQUEST_METHOD']=="POST")
-{
-echo 'a';
-
-    $fname = $_POST['fname'];
-    $fname = mysqli_real_escape_string($con,$fname);
-    
-    $lname = stripslashes($_REQUEST['lname']);
-    $lname = mysqli_real_escape_string($con,$lname);
-    
-    $email = stripslashes($_REQUEST['email']);
-    $email = mysqli_real_escape_string($con,$email);
-    
-    $password = stripslashes($_REQUEST['password']);
-    $password = mysqli_real_escape_string($con,$password);
-    
-    $phoneNumber = stripslashes($_REQUEST['phoneNumber']);
-    $phoneNumber = mysqli_real_escape_string($con,$phoneNumber);
-    
-    $language = stripslashes($_REQUEST['language']);
-    $language = mysqli_real_escape_string($con,$language);
-
-    $village = stripslashes($_REQUEST['village']);
-    $village = mysqli_real_escape_string($con,$village);
-    
-    $dist = stripslashes($_REQUEST['dist']);
-    $dist = mysqli_real_escape_string($con,$dist);
-    
-    $state = stripslashes($_REQUEST['state']);
-    $state = mysqli_real_escape_string($con,$state);
-}    
-    $query = "insert into `account` (fname,lname,email,password, phoneNumber,language , village , dist , state ) 
-        VALUES ('$fname', '$lname', '$email', '$password', '$phoneNumber', '$language', '$vilage', '$dist', '$state')";
-    
-    $result = mysqli_query($con,$query);
-
-    if($result)
-    {
-        echo "<div class='form'>";
-        echo  "<h3>You are registered successfully.</h3>";
-    }
-
-?>
 </body>
 
 </html>
