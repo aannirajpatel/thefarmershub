@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST" && isset($_POST['fname']))
     $state = stripslashes($_REQUEST['state']);
     $state = mysqli_real_escape_string($con,$state);
 
-    $query = "SELECT * FROM account WHERE (username='$username' email='$email')";
+    $query = "SELECT * FROM account WHERE (username='$username' AND email='$email')";
 
     $result = mysqli_query($con, $query);
 
