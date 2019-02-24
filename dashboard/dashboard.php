@@ -1,8 +1,8 @@
 <?php
-
+require("../includes/auth.php");
 //if(!isset($_SESSION['username'])){header('Location: ../login/login.php');}
 //REMOVE THIS WHEN LOGIN IS DONE:
-$username = "Aan";
+$username = $_SESSION["email"];
 ?>
 
 <!DOCTYPE html>

@@ -1,4 +1,5 @@
 <?php
+
 $con = mysqli_connect("localhost","root","","thefarmershub");
 
 if (mysqli_connect_errno())
@@ -15,6 +16,9 @@ if ($_SERVER['REQUEST_METHOD']=="POST" && isset($_POST['fname']))
     $lname = stripslashes($_REQUEST['lname']);
     $lname = mysqli_real_escape_string($con,$lname);
     
+    $username = stripslashes($_REQUEST['username']);
+    $username = mysqli_real_escape_string($con,$username);
+
     $email = stripslashes($_REQUEST['email']);
     $email = mysqli_real_escape_string($con,$email);
     
@@ -36,13 +40,13 @@ if ($_SERVER['REQUEST_METHOD']=="POST" && isset($_POST['fname']))
     $state = stripslashes($_REQUEST['state']);
     $state = mysqli_real_escape_string($con,$state);
 
-    $query = "SELECT * FROM account WHERE (fname='$fname' AND lname='$lname' AND phoneNumber='$phoneNumber')";
+    $query = "SELECT * FROM account WHERE (username='$username' email='$email')";
 
     $result = mysqli_query($con, $query);
 
     if(!$result){
-    $query = "insert into `account` (fname,lname,email,password, phoneNumber,language , village , dist , state ) 
-        VALUES ('$fname', '$lname', '$email', '$password', '$phoneNumber', '$language', '$village', '$dist', '$state')";
+    $query = "insert into `account` (fname,lname,username,email,password, phoneNumber,language , village , dist , state ) 
+        VALUES ('$fname', '$lname', '$username', '$email', '".md5($password)."', '$phoneNumber', '$language', '$village', '$dist', '$state')";
     
     $result = mysqli_query($con,$query);
 
@@ -99,9 +103,15 @@ if ($_SERVER['REQUEST_METHOD']=="POST" && isset($_POST['fname']))
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="username" class="col-sm-3 control-label">Username</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="username" placeholder="Username" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="email" class="col-sm-3 control-label">Email </label>
                     <div class="col-sm-9">
-                        <input type="email" name="email" placeholder="Email ID" class="form-control" name= "email">
+                        <input type="email" name="email" placeholder="Email ID" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">

@@ -17,6 +17,9 @@ if(isset($_POST['email'])){
     $rows = mysqli_num_rows($result);
     if($rows==1){
         $_SESSION['email'] = $email;
+        $userRes = mysqli_fetch_array($result);
+        $username = $userRes['username'];
+        $_SESSION['username']=$username;
         $firstnameQuery = "SELECT `fname` FROM `account` WHERE `email` = '$email'";
         $fnameres = mysqli_query($con, $firstnameQuery) or die(mysqli_error($con));
         while ($fnamerow = mysqli_fetch_array($fnameres, MYSQLI_BOTH)) {
@@ -26,7 +29,7 @@ if(isset($_POST['email'])){
     }
     else{
         echo "<div class='form'>
-        <h3>Email/Password is incorrect.</h3>
+        <h3>User ID/Password is incorrect.</h3>
         <br/>Click here to <a href='login.php'>Login</a></div>";
     }
 }
@@ -96,15 +99,15 @@ if(isset($_POST['email'])){
 <article class="card-body">
 <a href="../signup/signup.php" class="float-right btn btn-outline-primary">Sign up</a>
 <h4 class="card-title mb-4 mt-1">Login</h4>
-	 <form>
+	<form method="POST" action="">
     <div class="form-group">
     	<label>Your email</label>
-        <input name="" class="form-control" placeholder="Enter your email" type="email">
+        <input name="email" class="form-control" placeholder="Enter your email" type="email">
     </div> <!-- form-group// -->
     <div class="form-group">
     	<a class="float-right" href="#">Forgot?</a>
     	<label>Your password</label>
-        <input class="form-control" placeholder="Enter password" type="password">
+        <input class="form-control" placeholder="Enter password" type="password" name="password">
     </div> <!-- form-group// --> 
     <div class="form-group"> 
     </div> <!-- form-group// -->  
