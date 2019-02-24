@@ -5,7 +5,7 @@ require("../includes/db.php");
 //REMOVE THIS WHEN LOGIN IS DONE:
 $fname = $_SESSION['fname'];
 $uid = $_SESSION['uid'];
-$articleCountRes = "SELECT COUNT(*) FROM articles WHERE username"
+$articleCountRes = "SELECT COUNT(*) FROM articles WHERE username";
 $articleCount=0;
 $questionCount=0;
 $upCount = 0;
