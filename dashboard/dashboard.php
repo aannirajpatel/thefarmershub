@@ -2,7 +2,7 @@
 require("../includes/auth.php");
 //if(!isset($_SESSION['username'])){header('Location: ../login/login.php');}
 //REMOVE THIS WHEN LOGIN IS DONE:
-$username = $_SESSION["email"];
+$fname = $_SESSION['fname'];
 ?>
 
 <!DOCTYPE html>
@@ -25,7 +25,7 @@ $username = $_SESSION["email"];
   background-size: cover;
 }
    </style>
-  <title>Bootstrap Example</title>
+  <title>Dashboard</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
@@ -49,13 +49,24 @@ $username = $_SESSION["email"];
     <li class="nav-item">
       <a class="nav-link" href="#">Forums</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Statistics</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Logout</a>
+    </li>
   </ul>
 </nav>
 <br><br>
 <div class="container">
 <div class="card">
-  <div class="card-header"><h3>View Your Profile</h3></div>
-  <div class="card-body"><p>The .navbar-brand class is used to highlight the brand/logo/project name of your page.</p></div>
+  <div class="card-header"><h3>Hi <?php echo "$fname"?>! View Your Profile</h3></div>
+  <div class="card-body">
+      
+      <p> Details appear here </p>
+
+
+  </div>
 </div>
 </div>
 </body>
