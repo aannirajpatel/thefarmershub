@@ -20,10 +20,12 @@ if(isset($_POST['email'])){
         $userRes = mysqli_fetch_array($result);
         $username = $userRes['username'];
         $_SESSION['username']=$username;
-        $firstnameQuery = "SELECT `fname` FROM `account` WHERE `email` = '$email'";
-        $fnameres = mysqli_query($con, $firstnameQuery) or die(mysqli_error($con));
-        while ($fnamerow = mysqli_fetch_array($fnameres, MYSQLI_BOTH)) {
-            $_SESSION['fname'] = $fnamerow['fname'];
+        $detailQuery = "SELECT `fname`,`lname`,`uid` FROM `account` WHERE `email` = '$email'";
+        $detailRes = mysqli_query($con, $detailQuery) or die(mysqli_error($con));
+        while ($detailRow = mysqli_fetch_array($detailRes, MYSQLI_BOTH)) {
+            $_SESSION['fname'] = $detailRow['fname'];
+            $_SESSION['uid'] = $detailRow['uid'];
+
         }
         header("Location: ../dashboard/dashboard.php");
     }

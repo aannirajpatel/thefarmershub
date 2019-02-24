@@ -1,8 +1,15 @@
 <?php
 require("../includes/auth.php");
+require("../includes/db.php");
 //if(!isset($_SESSION['username'])){header('Location: ../login/login.php');}
 //REMOVE THIS WHEN LOGIN IS DONE:
 $fname = $_SESSION['fname'];
+$uid = $_SESSION['uid'];
+$articleCountRes = "SELECT COUNT(*) FROM articles WHERE username"
+$articleCount=0;
+$questionCount=0;
+$upCount = 0;
+$downCount = 0;
 ?>
 
 <!DOCTYPE html>
@@ -44,7 +51,7 @@ $fname = $_SESSION['fname'];
       <a class="nav-link active" href="#">Dashboard</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Blogs</a>
+      <a class="nav-link" href="#">Articles</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="#">Forums</a>
@@ -60,14 +67,16 @@ $fname = $_SESSION['fname'];
 <br><br>
 <div class="container">
 <div class="card">
-  <div class="card-header"><h3>Hi <?php echo "$fname"?>! View Your Profile</h3></div>
+  <div class="card-header"><h3><?php echo "$fname"?>'s Profile</h3></div>
   <div class="card-body">
-      
-      <p> Details appear here </p>
-
-
+    <table class="table table-striped">
+    <tr><td>Article posts</td><td><?php echo $articleCount;?></td></tr>
+    <tr><td>Question posts</td><td><?php echo $questionCount;?></td></tr>
+    <tr><td>Total Upvotes</td><td><?php echo $upCount;?></td></tr>
+    <tr><td>Total Downvotes</td><td><?php echo $downCount;?></td></tr>
+    </table>
   </div>
 </div>
 </div>
 </body>
-</html>
+</html> 
