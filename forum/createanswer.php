@@ -1,5 +1,11 @@
 <?php
 require("../includes/auth.php");
+include("../includes/db.php");
+if(!isset($_REQUEST['q'])){
+	header('../dashboard/dashboard.php');
+}
+$qno = $_REQUEST['q'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +25,7 @@ require("../includes/auth.php");
 		background-size: cover;
 		}
 		</style>
-		<title>Create question</title>
+		<title>Add answer</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
@@ -53,14 +59,17 @@ require("../includes/auth.php");
 		</nav>
 		<br><br>
 		<div class="container">
-			<form class="form-horizontal" role="form" action="addq.php" method="POST">
 				<div class="card">
-					<div class="card-header"><h3>Ask a Question</h3></div>
+					<div class="card-header">Question: <?php echo $qtext;?></div>
 					<div class="card-body">
-						<textarea class="form-control" rows="5" cols = 50 id="comment"></textarea>
+						<form class="form-horizontal" role="form" action="adda.php" method="POST">
+							<textarea class="form-control" rows="5" cols = 50 id="comment" name="answer" placeholder="Write your answer here">
+							</textarea>
+							<input type="hidden" name="q" <?php echo 'value="'.$qno.'"';?>>
+							</input>
+						</form>
 						<input type="submit" name="Submit" value="Submit" />
 					</div>
-				</form>
 			</div>
 		</div>
 	</body>

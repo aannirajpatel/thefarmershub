@@ -1,1 +1,5 @@
-This will have homepage (the link: farmershub.com)
+<?php
+
+header('Location: login/login.php');
+
+?>

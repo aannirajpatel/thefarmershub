@@ -1,7 +1,10 @@
 <?php
 require("../includes/auth.php");
-
-session_destroy();
+require("../includes/db.php");
+$answer=$_REQUEST['answer'];
+$uid = $_SESSION['uid'];
+$sql="INSERT INTO answer(atext,uid) VALUES('$answer','$uid')";
+$result=mysqli_query($con,$sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +26,7 @@ session_destroy();
   background-size: cover;
 }
    </style>
-  <title>Dashboard</title>
+  <title>Create question</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
@@ -40,13 +43,13 @@ session_destroy();
   <!-- Links -->
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link active" href="../dashboard/dashboard.php">Dashboard</a>
+      <a class="nav-link" href="../dashboard/dashboard.php">Dashboard</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="#">Articles</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="../forum/forum.php">Forums</a>
+      <a class="nav-link active" href="../forum/forum.php">Forums</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="#">Statistics</a>
@@ -60,11 +63,27 @@ session_destroy();
 <div class="container">
 <div class="card">
   <div class="card-header"><h3>
-  	Logged out
+  	<?php
+  	if($result){
+  		echo 'Done!';
+  	}
+  	else{
+  		echo 'Error';
+  	}
+  	?>
   </h3></div>
   <div class="card-body">
 
-  You have been logged out. Click <a href="../login/login.php">here</a> to log in again
+  	<?php
+
+	if($result){
+	echo 'Your answer has been added. Click <a href="../dashboard/viewq.php?q='.$qno.'">here</a> to view your answer on the question page.';
+	}
+	else {
+	echo "We were unable to post your answer. Please try again later.";
+	}
+	mysqli_close($con);
+	?>
 
   </div>
 

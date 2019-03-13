@@ -71,25 +71,65 @@ if ($_SERVER['REQUEST_METHOD']=="POST" && isset($_POST['fname']))
 ?>
 
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Signup - TFH</title>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
 
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
+<style type="text/css">
+        body, html {
+  height: 180%;
+}
+.bg {
+  /* The image used */
+  background-image: linear-gradient(to right bottom, #051937, #004872, #007d9e, #00b5b1, #12eba9);
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+label{
+    color: white;
+}
+</style>
+   <title>Login to TFH</title>
+   <meta charset="utf-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">  
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 </head>
-<!--<?php $_SERVER['PHP_SELF']?>-->
-<body>
+
+
+
+<body class="bg">
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <!-- Brand/logo -->
+  <a class="navbar-brand" href="#">The Farmer's Hub</a>
+  
+  <!-- Links -->
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="../login/login.php">Login</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="../signup/signup.php">Signup</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Articles</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Forums </a>
+    </li>
+  </ul>
+</nav>
+<br><br>       
 <div class="container">
             <form class="form-horizontal" role="form" action="" method="POST">
-                <h2>Sign Up for The Farmer's Hub</h2>
+                <h2 style="color:white">Sign Up for The Farmer's Hub</h2>
                 <div class="form-group">
                     <label for="fname" class="col-sm-3 control-label">First Name </label>
                     <div class="col-sm-9">

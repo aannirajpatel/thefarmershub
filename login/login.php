@@ -49,7 +49,7 @@ if(isset($_POST['email'])){
 }
 .bg {
   /* The image used */
-  background-image: linear-gradient(to right top, #bf00ff, #f300bf, #ff00ff, #008793, #00bf72);
+  background-image: linear-gradient(to right bottom, #051937, #004872, #007d9e, #00b5b1, #12eba9);
 
   /* Full height */
   height: 100%;
@@ -60,7 +60,7 @@ if(isset($_POST['email'])){
   background-size: cover;
 }
 </style>
-   <title>Login Form</title>
+   <title>Login to TFH</title>
    <meta charset="utf-8">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">  
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -79,24 +79,28 @@ if(isset($_POST['email'])){
   <!-- Links -->
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link active" href="../index.php">Home</a>
+      <a class="nav-link active" href="#">Login</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Blogs</a>
+      <a class="nav-link" href="../signup/signup.php">Signup</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Forums</a>
+      <a class="nav-link" href="#">Articles</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Forums </a>
     </li>
   </ul>
 </nav>
 <br><br>       
     
-<div class="container">
+<div class="container" style="color: white">
  <h3>Welcome! Join the Indian Community of Farmers.</h3></a></p>
 <hr>
+</div>
+<div class="container">
 <div class="row"></div>
 	<aside class="col-sm-4">
-<p> Login with your email</p>
 <div class="card">
 <article class="card-body">
 <a href="../signup/signup.php" class="float-right btn btn-outline-primary">Sign up</a>

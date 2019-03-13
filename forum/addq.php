@@ -49,13 +49,13 @@ $result=mysqli_query($con,$sql);
   <!-- Links -->
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link active" href="../dashboard/dashboard.php">Dashboard</a>
+      <a class="nav-link" href="../dashboard/dashboard.php">Dashboard</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="#">Articles</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="../forum/forum.php">Forums</a>
+      <a class="nav-link active" href="../forum/forum.php">Forums</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="#">Statistics</a>

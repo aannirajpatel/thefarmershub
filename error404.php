@@ -1,8 +1,3 @@
-<?php
-require("../includes/auth.php");
-
-session_destroy();
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,7 +27,6 @@ session_destroy();
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 </head>
 <body class="bg">
-
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
   <!-- Brand/logo -->
   <a class="navbar-brand" href="#">The Farmer's Hub</a>
@@ -60,11 +54,12 @@ session_destroy();
 <div class="container">
 <div class="card">
   <div class="card-header"><h3>
-  	Logged out
+  	404 Not found
+  	?>
   </h3></div>
   <div class="card-body">
 
-  You have been logged out. Click <a href="../login/login.php">here</a> to log in again
+  The resource you are looking for was either deleted or does not exist.
 
   </div>
 

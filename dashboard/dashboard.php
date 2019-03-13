@@ -21,7 +21,7 @@ $downCount = 0;
 }
 .bg {
   /* The image used */
-  background-image: linear-gradient(to right bottom, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+  background-image: linear-gradient(to right bottom, #051937, #004872, #007d9e, #00b5b1, #12eba9);
 
   /* Full height */
   height: 100%;
@@ -48,7 +48,7 @@ $downCount = 0;
   <!-- Links -->
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link active" href="#">Dashboard</a>
+      <a class="nav-link active" href="../dashboard/dashboard.php">Dashboard</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="#">Articles</a>
@@ -60,7 +60,7 @@ $downCount = 0;
       <a class="nav-link" href="#">Statistics</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Logout</a>
+      <a class="nav-link" href="../logout/logout.php">Logout</a>
     </li>
   </ul>
 </nav>
