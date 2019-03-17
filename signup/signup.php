@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST" && isset($_POST['fname']))
 
 <style type="text/css">
         body, html {
-  height: 180%;
+  height: fill;
 }
 .bg {
   /* The image used */
@@ -89,9 +89,6 @@ if ($_SERVER['REQUEST_METHOD']=="POST" && isset($_POST['fname']))
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-}
-label{
-    color: white;
 }
 </style>
    <title>Login to TFH</title>
@@ -106,31 +103,57 @@ label{
 
 
 <body class="bg">
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-  <!-- Brand/logo -->
-  <a class="navbar-brand" href="#">The Farmer's Hub</a>
-  
-  <!-- Links -->
-  <ul class="navbar-nav">
-    <li class="nav-item">
-      <a class="nav-link" href="../login/login.php">Login</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link active" href="../signup/signup.php">Signup</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Articles</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Forums </a>
-    </li>
-  </ul>
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+  <a class="navbar-brand" href="#">TFH</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="../login/login.php">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="../signup/signup.php">Sign Up</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Articles</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="../forum/forum.php">Forums</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Statistics</a>
+      </li>
+    </ul>
+  </div>
+    <form class="form-inline my-2 my-lg-0" style="float:right;" action="../forum/searchq.php" method="get">
+      <input class="form-control mr-sm-2" name="search" style="width: 300px" type="search" placeholder="Search for any question" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
 </nav>
-<br><br>       
+<br><br><br><br>       
 <div class="container">
             <form class="form-horizontal" role="form" action="" method="POST">
                 <h2 style="color:white">Sign Up for The Farmer's Hub</h2>
-                <div class="form-group">
+<!-- Register </button>-->
+
+            </form> <!-- /form -->
+        </div> <!-- ./container --> 
+
+
+<div class="container">
+<hr>
+</div>
+<div class="container">
+<div class="row"></div>
+    <aside class="col-sm-9">
+<div class="card">
+<article class="card-body">
+<a href="../signup/signup.php" class="float-right btn btn-outline-primary">Login</a>
+<h4 class="card-title mb-4 mt-1">Sign Up</h4>
+    <form method="POST" action="">
+                    <div class="form-group">
                     <label for="fname" class="col-sm-3 control-label">First Name </label>
                     <div class="col-sm-9">
                         <input type="text" name="fname" placeholder="First Name" class="form-control" autofocus>
@@ -164,7 +187,7 @@ label{
                     <label for="phoneNumber" class="col-sm-3 control-label">Phone number </label>
                     <div class="col-sm-9">
                         <input type="phoneNumber" name="phoneNumber" placeholder="Phone number" class="form-control">
-                        <span class="help-block">Your phone number won't be disclosed anywhere </span>
+                        <span style="padding-top: 2px;" class="help-block">&nbsp;Your phone number won't be disclosed anywhere </span>
                     </div>
                 </div>
                <div class="form-group">
@@ -195,15 +218,15 @@ label{
 
                 <div class="form-group">
                     <div class="col-sm-9 col-sm-offset-3">
-                        <span class="help-block"> All fields are required. </span>
+                        <span class="help-block">&nbsp;All fields are required. </span>
                     </div>
                 </div>
-                <input type="submit" class="btn btn-primary btn-block"><!-- Register </button>-->
-
-            </form> <!-- /form -->
-        </div> <!-- ./container --> 
-
-
+                <input type="submit" class="btn btn-primary btn-block">
+</form>
+</article>
+</div>
+</aside>
+<aside class="col-sm-2">
+</aside>
 </body>
-
 </html>

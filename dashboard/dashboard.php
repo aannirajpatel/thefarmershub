@@ -1,15 +1,35 @@
 <?php
 require("../includes/auth.php");
 require("../includes/db.php");
-//if(!isset($_SESSION['username'])){header('Location: ../login/login.php');}
-//REMOVE THIS WHEN LOGIN IS DONE:
 $fname = $_SESSION['fname'];
 $uid = $_SESSION['uid'];
-$articleCountRes = "SELECT COUNT(*) FROM articles WHERE username";
 $articleCount=0;
+$answerCount=0;
 $questionCount=0;
 $upCount = 0;
 $downCount = 0;
+$res = mysqli_query($con, "SELECT articleid FROM articles WHERE uid=$uid");
+if($res){
+  $articleCount = mysqli_num_rows($res);
+}
+$res = mysqli_query($con, "SELECT qno FROM answer WHERE uid=$uid");
+if($res){
+  $answerCount = mysqli_num_rows($res);
+}
+$res = mysqli_query($con, "SELECT qno FROM question WHERE uid=$uid");
+if($res){
+  $questionCount = mysqli_num_rows($res);
+}
+$res = mysqli_query($con, "SELECT SUM(qupcount) AS uc FROM question WHERE uid=$uid");
+if($res){
+  $row = mysqli_fetch_array($res);
+  $upCount=$row['uc'];
+}
+$res = mysqli_query($con, "SELECT SUM(qdowncount) AS dc FROM question WHERE uid=$uid");
+if($res){
+  $row = mysqli_fetch_array($res);
+  $downCount=$row['dc'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -20,13 +40,8 @@ $downCount = 0;
   height: 100%;
 }
 .bg {
-  /* The image used */
-  background-image: linear-gradient(to right bottom, #051937, #004872, #007d9e, #00b5b1, #12eba9);
-
-  /* Full height */
+  background-image: linear-gradient(to right top, #ff6600, #ff3f6c, #f052b7, #a376e6, #128deb);
   height: 100%;
-
-  /* Center and scale the image nicely */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -41,30 +56,36 @@ $downCount = 0;
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 </head>
 <body class="bg">
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-  <!-- Brand/logo -->
-  <a class="navbar-brand" href="#">The Farmer's Hub</a>
-  
-  <!-- Links -->
-  <ul class="navbar-nav">
-    <li class="nav-item">
-      <a class="nav-link active" href="../dashboard/dashboard.php">Dashboard</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Articles</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="../forum/forum.php">Forums</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Statistics</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="../logout/logout.php">Logout</a>
-    </li>
-  </ul>
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+  <a class="navbar-brand" href="#">TFH</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link active" href="../dashboard/dashboard.php">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Articles</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="../forum/forum.php">Forums</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Statistics</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="../logout/logout.php">Logout</a>
+      </li>
+    </ul>
+  </div>
+    <form class="form-inline my-2 my-lg-0" style="float:right;" action="../forum/searchq.php" method="get">
+      <input class="form-control mr-sm-2" name="search" style="width: 300px" type="search" placeholder="Search for any question" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
 </nav>
-<br><br>
+<br><br><br><br>
 <div class="container">
 <div class="card">
   <div class="card-header"><h3><?php echo "$fname"?>'s Profile</h3></div>
@@ -72,8 +93,9 @@ $downCount = 0;
     <table class="table table-striped">
     <tr><td>Article posts</td><td><?php echo $articleCount;?></td></tr>
     <tr><td>Question posts</td><td><?php echo $questionCount;?></td></tr>
-    <tr><td>Total Upvotes</td><td><?php echo $upCount;?></td></tr>
-    <tr><td>Total Downvotes</td><td><?php echo $downCount;?></td></tr>
+    <tr><td>Answer posts</td><td><?php echo $answerCount;?></td></tr>
+    <tr><td>Total Question Upvotes</td><td><?php echo $upCount;?></td></tr>
+    <tr><td>Total Question Downvotes</td><td><?php echo $downCount;?></td></tr>
     </table>
   </div>
 </div>

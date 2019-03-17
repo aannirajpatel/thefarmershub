@@ -1,8 +1,7 @@
 <?php
-require("../includes/auth.php");
 require("../includes/db.php");
-$uid=$_SESSION['uid'];
-if($_REQUEST['vote']=="u"){
+$uid=$_REQUEST['uid'];
+if($_REQUEST['vote']=="Upvote"){
 	$qno = $_REQUEST['qno'];
 	$qry = "SELECT FROM qupdown WHERE uid=$uid AND qno=$qno AND ud=1";
 	$res = mysqli_query($con, $qry);
@@ -12,8 +11,9 @@ if($_REQUEST['vote']=="u"){
 		$qry = "UPDATE question SET qupcount=qupcount+1 WHERE qno=$qno";
 		$res = mysqli_query($con, $qry);
 	}
+	echo 'Upvoted';
 }
-else if($_REQUEST['vote']=="d"){
+else if($_REQUEST['vote']=="Downvote"){
 	$qno = $_REQUEST['qno'];
 	$qry = "SELECT FROM qupdown WHERE uid=$uid AND qno=$qno AND ud=0";
 	$res = mysqli_query($con, $qry);
@@ -23,8 +23,9 @@ else if($_REQUEST['vote']=="d"){
 		$qry = "UPDATE question SET qupcount=qupcount+1 WHERE qno=$qno";
 		$res = mysqli_query($con, $qry);
 	}
+	echo 'Downvoted';
 }
-else if($_REQUEST['vote']=="r"){
+else if($_REQUEST['vote']=="Reset"){
 	$qno = $_REQUEST['qno'];
 	$qry = "SELECT FROM qupdown WHERE uid=$uid AND qno=$qno AND ud=1";
 	$res = mysqli_query($con, $qry);
@@ -34,4 +35,5 @@ else if($_REQUEST['vote']=="r"){
 		$qry = "UPDATE question SET qupcount=qupcount+1 WHERE qno=$qno";
 		$res = mysqli_query($con, $qry);
 	}
+	echo 'Resetted';
 }

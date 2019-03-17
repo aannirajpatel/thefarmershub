@@ -25,14 +25,12 @@ if(isset($_POST['email'])){
         while ($detailRow = mysqli_fetch_array($detailRes, MYSQLI_BOTH)) {
             $_SESSION['fname'] = $detailRow['fname'];
             $_SESSION['uid'] = $detailRow['uid'];
-
         }
         header("Location: ../dashboard/dashboard.php");
     }
     else{
-        echo "<div class='form'>
-        <h3>User ID/Password is incorrect.</h3>
-        <br/>Click here to <a href='login.php'>Login</a></div>";
+        echo "<div class='alert alert-warning'>
+        <br><br>Incorrect Email/Password. Click here to <a href='login.php'>try login again</a></div>";
     }
 }
     
@@ -48,13 +46,8 @@ if(isset($_POST['email'])){
   height: 100%;
 }
 .bg {
-  /* The image used */
   background-image: linear-gradient(to right bottom, #051937, #004872, #007d9e, #00b5b1, #12eba9);
-
-  /* Full height */
   height: 100%;
-
-  /* Center and scale the image nicely */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -68,32 +61,37 @@ if(isset($_POST['email'])){
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 </head>
-
-
-
 <body class="bg">
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-  <!-- Brand/logo -->
-  <a class="navbar-brand" href="#">The Farmer's Hub</a>
-  
-  <!-- Links -->
-  <ul class="navbar-nav">
-    <li class="nav-item">
-      <a class="nav-link active" href="#">Login</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="../signup/signup.php">Signup</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Articles</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Forums </a>
-    </li>
-  </ul>
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+  <a class="navbar-brand" href="#">TFH</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link active" href="../login/login.php">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="../signup/signup.php">Sign Up</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Articles</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="../forum/forum.php">Forums</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Statistics</a>
+      </li>
+    </ul>
+  </div>
+    <form class="form-inline my-2 my-lg-0" style="float:right;" action="../forum/searchq.php" method="get">
+      <input class="form-control mr-sm-2" name="search" style="width: 300px" type="search" placeholder="Search for any question" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
 </nav>
-<br><br>       
-    
+<br><br><br><br>       
 <div class="container" style="color: white">
  <h3>Welcome! Join the Indian Community of Farmers.</h3></a></p>
 <hr>
