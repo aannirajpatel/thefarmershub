@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST" && isset($_POST['fname']))
   background-size: cover;
 }
 </style>
-   <title>Login to TFH</title>
+   <title>Signup for TFH</title>
    <meta charset="utf-8">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">  
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
