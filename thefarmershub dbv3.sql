@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 17, 2019 at 11:07 AM
+-- Generation Time: Mar 19, 2019 at 07:53 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -47,7 +47,8 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`uid`, `username`, `email`, `phoneNumber`, `password`, `language`, `fname`, `lname`, `village`, `dist`, `state`) VALUES
-(57, 'patelaan13', 'patelaan13@gmail.com', 2147483647, '7431ba62766576c4fd14ad1711dba272', 'Hindi', 'Aan', 'Patel', 'Manjalpur', 'Vadodara', 'Gujarat');
+(57, 'patelaan13', 'patelaan13@gmail.com', 2147483647, '7431ba62766576c4fd14ad1711dba272', 'Hindi', 'Aan', 'Patel', 'Manjalpur', 'Vadodara', 'Gujarat'),
+(58, 'dm123', 'dm@gmail.com', 2147483647, '1a1dc91c907325c69271ddf0c944bc72', 'Gujarati', 'Deval', 'Modi', 'Vellore', 'Vellore', 'Tamil Nadu');
 
 -- --------------------------------------------------------
 
@@ -59,7 +60,7 @@ CREATE TABLE `answer` (
   `qno` int(10) NOT NULL,
   `uid` int(10) NOT NULL,
   `atext` longtext NOT NULL,
-  `atimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `atimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `aupcount` int(255) NOT NULL,
   `adowncount` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -70,11 +71,12 @@ CREATE TABLE `answer` (
 
 INSERT INTO `answer` (`qno`, `uid`, `atext`, `atimestamp`, `aupcount`, `adowncount`) VALUES
 (16, 1, 'That should be done 3 times a day, which makes it 21 times a week for barley.', '2019-03-13 19:30:31', 0, 0),
-(19, 57, 'It would be great if you can use Sunflower brand. They are cheap and give strong harvest.', '2019-03-13 20:54:02', 0, 0),
-(18, 57, 'You should use no more than 500g of Nitrogen fertilizer every week.', '2019-03-13 20:59:17', 0, 0),
-(16, 57, 'That should be done 3 times a day, which makes it 21 times a week for barley.', '2019-03-13 21:02:04', 0, 0),
-(16, 57, 'And keep the water flow slow.', '2019-03-13 21:02:49', 0, 0),
-(19, 57, 'You should not use ABC companys seeds. They are bad.', '2019-03-14 05:41:03', 0, 0);
+(16, 57, 'That should be done 3 times a day, which makes it 21 times a week for barley.', '2019-03-13 21:02:04', 0, 1),
+(16, 57, 'And keep the water flow slow.', '2019-03-13 21:02:49', 0, 1),
+(18, 57, 'You should use no more than 500g of Nitrogen fertilizer every week.', '2019-03-13 20:59:17', 1, 0),
+(19, 57, 'It would be great if you can use Sunflower brand. They are cheap and give strong harvest.', '2019-03-19 17:12:16', 1, 0),
+(19, 57, 'Hello. I am trying out the answering feature.', '2019-03-19 17:15:37', 1, 0),
+(19, 57, 'Hello. I am trying out the answering feature. Second try.', '2019-03-19 17:16:25', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -91,6 +93,28 @@ CREATE TABLE `article` (
   `upcount` int(255) NOT NULL,
   `downcount` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `aupdown`
+--
+
+CREATE TABLE `aupdown` (
+  `auid` int(11) NOT NULL,
+  `vuid` int(11) NOT NULL,
+  `qno` int(11) NOT NULL,
+  `ud` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `aupdown`
+--
+
+INSERT INTO `aupdown` (`auid`, `vuid`, `qno`, `ud`) VALUES
+(57, 57, 16, 0),
+(57, 57, 18, 1),
+(57, 57, 19, 1);
 
 -- --------------------------------------------------------
 
@@ -127,10 +151,10 @@ CREATE TABLE `question` (
 --
 
 INSERT INTO `question` (`uid`, `qno`, `qtext`, `qtimestamp`, `qupcount`, `qdowncount`) VALUES
-(57, 2, 'How often should wheat crops be watered in a week?', '2019-02-28 06:22:12', 0, 0),
-(57, 16, 'How often should barley crops be watered in a week?', '2019-02-28 13:15:05', 0, 0),
+(57, 2, 'How often should wheat crops be watered in a week?', '2019-03-19 22:49:35', 1, 0),
+(57, 16, 'How often should barley crops be watered in a week?', '2019-03-19 22:49:48', 0, 1),
 (57, 18, 'How much fertilizer should I use for Wheat crops?', '2019-03-14 01:16:42', 0, 0),
-(57, 19, 'Which company\'s seeds should I use for best harvest of Wheat?', '2019-03-14 02:23:27', 0, 0);
+(57, 19, 'Which company\'s seeds should I use for best harvest of Wheat?', '2019-03-19 22:49:27', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -143,6 +167,15 @@ CREATE TABLE `qupdown` (
   `qno` int(11) NOT NULL,
   `ud` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `qupdown`
+--
+
+INSERT INTO `qupdown` (`uid`, `qno`, `ud`) VALUES
+(57, 19, 1),
+(57, 2, 1),
+(57, 16, 0);
 
 -- --------------------------------------------------------
 
@@ -178,6 +211,12 @@ ALTER TABLE `article`
   ADD PRIMARY KEY (`articleid`);
 
 --
+-- Indexes for table `aupdown`
+--
+ALTER TABLE `aupdown`
+  ADD PRIMARY KEY (`auid`,`vuid`,`qno`);
+
+--
 -- Indexes for table `question`
 --
 ALTER TABLE `question`
@@ -197,7 +236,7 @@ ALTER TABLE `statistics`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `uid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `uid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `article`
