@@ -1,5 +1,12 @@
 <?php
-require('../includes/auth.php');
+session_start();
+if(isset($_SESSION['uid'])){
+	$uid = $_SESSION['uid'];	
+	$loggedIn=1;
+}
+else{
+	$loggedIn=0;
+}
 require('../includes/db.php');
 ?>
 <!DOCTYPE html>
@@ -33,6 +40,7 @@ require('../includes/db.php');
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
+    	<?php if($loggedIn==1){ ?>
       <li class="nav-item">
         <a class="nav-link" href="../dashboard/dashboard.php">Dashboard</a>
       </li>
@@ -48,6 +56,25 @@ require('../includes/db.php');
       <li class="nav-item">
         <a class="nav-link" href="../logout/logout.php">Logout</a>
       </li>
+	<?php } 
+	else{
+	?>
+      <li class="nav-item">
+        <a class="nav-link" href="../login/login.php">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="../signup/signup.php">Sign Up</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Articles</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="../forum/forum.php">Forums</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Statistics</a>
+      </li>
+	<?php } ?>
     </ul>
   </div>
     <form class="form-inline my-2 my-lg-0" style="float:right;" action="searchq.php" method="get">

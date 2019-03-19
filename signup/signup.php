@@ -7,6 +7,9 @@ if (mysqli_connect_errno())
   echo "Failed to connect to MySQL: " . mysqli_connect_error();
   }
 
+$done = 0;
+$success = 0;
+
 if ($_SERVER['REQUEST_METHOD']=="POST" && isset($_POST['fname']))
 {
 
@@ -44,27 +47,21 @@ if ($_SERVER['REQUEST_METHOD']=="POST" && isset($_POST['fname']))
 
     $result = mysqli_query($con, $query);
 
-    if(!$result){
-    $query = "insert into `account` (fname,lname,username,email,password, phoneNumber,language , village , dist , state ) 
+    if($result==false||mysqli_num_rows($result)==0){
+    $query = "INSERT INTO account(fname,lname,username,email,password,phoneNumber,language,village,dist,state) 
         VALUES ('$fname', '$lname', '$username', '$email', '".md5($password)."', '$phoneNumber', '$language', '$village', '$dist', '$state')";
     
     $result = mysqli_query($con,$query);
+    
+    $done = 1;
 
-    if($result)
-    {
-        echo '
-        <div class="alert alert-success">
-  		<strong>Account created!</strong> Click <a href="../login/login.php">here</a> to login.
-		</div>
-        ';
-    }
-	}
+      if($result){
+        $success = 1;
+      }
+	  }
 	else{
-		echo '
-        <div class="alert alert-warning">
-  		<strong>Account already exists!</strong> Click <a href="../login/login.php">here</a> to login if you are a returning user.
-		</div>
-        ';
+        $done=1;
+		    $success = 0;
 	}
 
 }
@@ -79,13 +76,8 @@ if ($_SERVER['REQUEST_METHOD']=="POST" && isset($_POST['fname']))
   height: fill;
 }
 .bg {
-  /* The image used */
   background-image: linear-gradient(to right bottom, #051937, #004872, #007d9e, #00b5b1, #12eba9);
-
-  /* Full height */
-  height: 100%;
-
-  /* Center and scale the image nicely */
+  height: fill;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -97,7 +89,14 @@ if ($_SERVER['REQUEST_METHOD']=="POST" && isset($_POST['fname']))
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+<script>
+  $("document").ready(function(){
+    $("#signupSuccess").hide();
+    $("#signupFailure").hide();
+    if(<?php echo $success; ?> && <?php echo $done ?>){$("#signupSuccess").show();}
+    else if(<?php echo $done; ?>) {$("#signupFailure").show();}
+  });
+</script>
 </head>
 
 
@@ -132,14 +131,19 @@ if ($_SERVER['REQUEST_METHOD']=="POST" && isset($_POST['fname']))
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
 </nav>
-<br><br><br><br>       
+<br><br>
+<div class="alert alert-success" id="signupSuccess">
+      <strong>Account created!</strong> Click <a href="../login/login.php">here</a> to login.
+</div>
+<div class="alert alert-danger" id="signupFailure">
+      <strong>Account already exists!</strong> Click <a href="../login/login.php">here</a> to login.
+</div>
+<br><br>       
 <div class="container">
             <form class="form-horizontal" role="form" action="" method="POST">
                 <h2 style="color:white">Sign Up for The Farmer's Hub</h2>
-<!-- Register </button>-->
-
-            </form> <!-- /form -->
-        </div> <!-- ./container --> 
+            </form>
+        </div> 
 
 
 <div class="container">
@@ -150,7 +154,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST" && isset($_POST['fname']))
     <aside class="col-sm-9">
 <div class="card">
 <article class="card-body">
-<a href="../signup/signup.php" class="float-right btn btn-outline-primary">Login</a>
+<a href="../login/login.php" class="float-right btn btn-outline-primary">Login</a>
 <h4 class="card-title mb-4 mt-1">Sign Up</h4>
     <form method="POST" action="">
                     <div class="form-group">

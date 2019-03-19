@@ -12,12 +12,34 @@ $canAnswer = 0;
 if(isset($_SESSION["uid"])){
 $canAnswer=1;
 $uid = $_SESSION['uid'];
+$udqry = "SELECT * FROM qupdown WHERE qno=$qno AND uid=$uid";
+$udres = mysqli_query($con, $udqry);
+	if($udres!=false && mysqli_num_rows($udres)>0){
+		$udrow = mysqli_fetch_assoc($udres);
+		if($udrow['ud']==1){
+			$uvs = '<i id="usvg" data-vi="angle-top" data-vi-size="30" style="color: green;"></i>';
+			$dvs = '<i id="dsvg" data-vi="angle-bottom" data-vi-size="30" style="color: black;"></i>';
+			$udsituation="Upvoted";
+		}
+		else if($udrow['ud']==0){
+			$uvs = '<i id="usvg" data-vi="angle-top" data-vi-size="30" style="color: black;"></i>';
+			$dvs = '<i id="dsvg" data-vi="angle-bottom" data-vi-size="30" style="color: red;"></i>';
+			$udsituation="Downvoted";
+		}
+	}
+	else{
+		$uvs = '<i id="usvg" data-vi="angle-top" data-vi-size="30" style="color: black;"></i>';
+		$dvs = '<i id="dsvg" data-vi="angle-bottom" data-vi-size="30" style="color: black;"></i>';
+		$udsituation = "Resetted";
+	}
 }
+
 else{
 $canAnswer=0;
 }
 
 $qry = "SELECT qtext,uid FROM question WHERE qno = $qno";
+
 $res = mysqli_query($con, $qry) or die(mysqli_error($con));
 if(mysqli_num_rows($res) == 0){
 header('Location: ../error404.php');
@@ -38,7 +60,6 @@ $postingUser = $row['uid'];
       }
       .bg {
         background-image: linear-gradient(to right top, #ff6600, #ff3f6c, #f052b7, #a376e6, #128deb);
-        /*background-image: linear-gradient(to right bottom, #051937, #004d7a, #008793, #00bf72, #a8eb12);*/
         height: 100%;
         background-position: center;
         background-repeat: no-repeat;
@@ -56,39 +77,86 @@ $postingUser = $row['uid'];
     </script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/vivid-icons@1.0.9" type="text/javascript">
+    </script>
     <script type="text/javascript">
-		var request;
-		x = function(event){
-			console.log("hi");
-	    event.preventDefault();
-	    if (request) {
-	        request.abort();
-	    }
-	    var $form = $(this);
-	    var $inputs = $form.find("input, select, button, textarea");
-	    var serializedData = $form.serialize();
-	    $inputs.prop("disabled", true);
-	    request = $.ajax({
-	        url: "./qupdown.php",
-	        type: "post",
-	        data: serializedData
-	    });
-	    request.done(function (response, textStatus, jqXHR){
-	        $("#udformcover").innerHTML=response;
-	    });
-	    request.fail(function (jqXHR, textStatus, errorThrown){
-	        console.error(
-	            "The following error occurred: "+
-	            textStatus, errorThrown
-	        );
-	    });
-	    request.always(function () {
-	        $inputs.prop("disabled", false);
-	    });
-		};
-    $("#uform").submit(x);
-    $("#dform").submit(x);
-    $("#rform").submit(x);
+    	function aupvote(q,u){
+    		var auddata = "uid="+toString(u)+"&qno="+toString(q);
+    		$.ajax({
+			      type: "POST",
+			      url: "aupdown.php",
+			      data: auddata + "&vote=Upvote",
+			      success: function(data) {
+			       if(data=="Resetted"){
+		 	        	$("#btnup"+toString(u)+toString(q)).attr("style","background: white;");
+			        	$("#btndown"+toString(u)+toString(q)).attr("style","background: white;");
+			        }
+			        if(data=="Upvoted"){
+		 	        	$("#btnup"+toString(u)+toString(q)).attr("style","background: green;");
+			        	$("#btndown"+toString(u)+toString(q)).attr("style","background: white;");
+			        }
+			        console.log(data);
+			      }
+			    });
+    	};
+    	var data = "uid=" + <?php echo '"'.$uid.'"' ?> + "&q=" + <?php echo '"'.$qno.'"' ?> ;
+    	var udsituation = <?php echo '"'.$udsituation.'"';?>;
+    	console.log(udsituation);
+		$("document").ready(function(){
+			if(udsituation=="Upvoted"){
+				console.log("Upvoted style");
+				$("#upvote").attr("style", "background: green;");
+			}
+			else if(udsituation=="Downvoted"){
+				console.log("Downvoted style");
+				$("#downvote").attr("style", "background: red;");
+			}
+			else{
+				console.log("Resetted style");
+				$("#upvote").attr("style", "background: white;");
+				$("#downvote").attr("style", "background: white;");	
+			}
+			$("#upvote").click(
+				function(){
+				console.log("Upvote");
+			    $.ajax({
+			      type: "POST",
+			      url: "qupdown.php",
+			      data: data + "&vote=Upvote",
+			      success: function(data) {
+			       if(data=="Resetted"){
+		 	        	$("#upvote").attr("style","background: white;");
+			        	$("#downvote").attr("style","background: white;");
+			        }
+			        if(data=="Upvoted"){
+			        	$("#upvote").attr("style","background: green;");
+			        	$("#downvote").attr("style","background: white;");
+			        }
+			        console.log(data);
+			      }
+			    });
+			  });
+			$("#downvote").click(
+				function(){
+				console.log("Downvote");
+			    $.ajax({
+			      type: "POST",
+			      url: "qupdown.php",
+			      data: data + "&vote=Downvote",
+			      success: function(data) {
+			        if(data=="Resetted"){
+			        	$("#upvote").attr("style","background: white;");
+			        	$("#downvote").attr("style","background: white;");
+			        }
+			        if(data=="Downvoted"){
+			        	$("#upvote").attr("style","background: white;");
+			        	$("#downvote").attr("style","background: red;");
+			        }
+			        console.log(data);
+			      }
+			    });
+			  });
+		});
     </script>
   </head>
   <body class="bg">
@@ -126,7 +194,7 @@ $postingUser = $row['uid'];
 		  <li class="nav-item">
 			<a class="nav-link" href="../signup/signup.php">Sign Up</a>
 		  </li>
-		  	<li class="nav-item active">
+		  	<li class="nav-item">
 			<a class="nav-link" href="#">Articles</a>
 		  </li>
 		  <li class="nav-item active">
@@ -165,28 +233,18 @@ $postingUser = $row['uid'];
           	if($canAnswer==1){
           ?>
           <br>
-            <span style="float:right">
-			<button class="btn-primary"><a style="text-decoration: none; color: white;" href= <?php echo "createanswer.php?q=".$qno; ?>>Answer this question</a></button>
+            <span style="float: left;">
+			<button class="btn btn-default"><a style="text-decoration: none;" href= <?php echo "createanswer.php?q=".$qno; ?>><i data-vi="chat" data-vi-size="30"></i></a></button>
             <span id="udformcover">
-			<form style="display:inline;" id="uform">
-        <input class="btn-success" type="submit" id="uv" value="Upvote" name="vote"/>
-        <input type="hidden" name="uid" <?php echo 'value="'.$uid.'"'; ?>/>
-      </form>
-      <form style="display: inline;" id="dform">
-        <input class="btn-danger" type="submit" id="dv" value="Downvote" name="vote"/>
-        <input type="hidden" name="uid" <?php echo 'value="'.$uid.'"'; ?>/>
-        </form>
-      <form style="display: inline;" id="rform">
-        <input class="btn-warning" type="submit" id="rs" value="Reset" name="vote"/>
-        <input type="hidden" name="uid" <?php echo 'value="'.$uid.'"'; ?>/>
-      </form>
-      </span>
+			<button class="btn btn-default" id="upvote"><?php echo $uvs ?></button>
+			<button class="btn btn-default" id="downvote"><?php echo $dvs ?></button>
+			</span>
 			</span>
 			<br>
           <?php
           	}
           ?>
-      	<br><br>
+      	<br>
       			<table class="table">
       				<thead><th>User</th><th>Answer</th><th>Timestamp</th><th>Upvotes</th><th>Downvotes</th></thead>
       				<?php
@@ -206,8 +264,8 @@ $postingUser = $row['uid'];
                       <td>".$r['fname']." ".$r['lname']."</td>
       								<td>".$row['atext']."</td>
       								<td>".$row['atimestamp']."</td>
-      								<td style='color: green;'>".$row['aupcount']."</td>
-      								<td style='color: red;'>".$row['adowncount']."</td>
+      								<td style='color: green;'>".$row['aupcount'].'<button class="btn btn-default" id="btnup'.$row['uid'].$row['qno'].'"><span onclick="aupvote('.$row['qno'].','.$row['uid'].')" data-vi="angle-top" data-vi-size="20"></span></button>'."</td>
+      								<td style='color: red;'>".$row['adowncount'].'<button class="btn btn-default" id="btndown'.$row['uid'].$row['qno'].'"><span onclick="adownvote('.$row['qno'].','.$row['uid'].')" data-vi="angle-bottom" data-vi-size="20"></span></button>'."</td>
       							</tr>";
       				  	}
       				  }
