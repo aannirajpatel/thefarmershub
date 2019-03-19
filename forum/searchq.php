@@ -16,7 +16,7 @@ $query = $_REQUEST['search'];
       }
       .bg {
         background-image: linear-gradient(to right top, #ff6600, #ff3f6c, #f052b7, #a376e6, #128deb);
-        height: 100%;
+        height: fill;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;

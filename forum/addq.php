@@ -13,11 +13,11 @@ $result=mysqli_query($con,$sql);
 <head>
     <style type="text/css">
         body, html {
-  height: 100%;
+  height: fill;
 }
 .bg {
   background-image: linear-gradient(to right bottom, #051937, #004872, #007d9e, #00b5b1, #12eba9);
-  height: 100%;
+  height: fill;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
