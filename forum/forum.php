@@ -14,11 +14,13 @@ require('../includes/db.php');
 <head>
     <style type="text/css">
         body, html {
-  height: fill;
+  	height: fill;
+  	min-height: 100%;
 }
 .bg {
-  background-image: linear-gradient(to right top, #ff6600, #ff3f6c, #f052b7, #a376e6, #128deb);
+  background: linear-gradient(to right bottom, #051937, #004872, #007d9e, #00b5b1, #12eba9);
   height: fill;
+  min-height: 100%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -98,10 +100,10 @@ require('../includes/db.php');
           $qryans = "SELECT count(*) AS cans FROM answer WHERE qno=".$rows['qno'];
           $res = mysqli_query($con, $qryans);
           $rowans = mysqli_fetch_array($res);
-          $qryname = "SELECT fname, lname FROM account WHERE uid=".$rows['uid'];
+          $qryname = "SELECT username FROM account WHERE uid=".$rows['uid'];
           $resname = mysqli_query($con, $qryname);
           $nameans = mysqli_fetch_array($resname);
-          $name=$nameans['fname']." ".$nameans['lname'];
+          $name=$nameans['username'];
           echo "<tr>
             <td>".$name."</td>
             <td>".'<a href="viewq.php?q='.$rows['qno'].'">'.$rows['qtext']."</a></td>

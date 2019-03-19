@@ -7,10 +7,12 @@ require("../includes/auth.php");
 		<style type="text/css">
 		body, html {
 		height: fill;
+		min-height: 100%;
 		}
 		.bg {
 		background-image: linear-gradient(to right bottom, #051937, #004872, #007d9e, #00b5b1, #12eba9);
 		height: fill;
+		min-height: 100%;
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: cover;
@@ -33,13 +35,13 @@ require("../includes/auth.php");
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link active" href="../dashboard/dashboard.php">Dashboard</a>
+        <a class="nav-link" href="../dashboard/dashboard.php">Dashboard</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Articles</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="../forum/forum.php">Forums</a>
+        <a class="nav-link active" href="../forum/forum.php">Forums</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Statistics</a>

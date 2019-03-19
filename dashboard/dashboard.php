@@ -2,9 +2,17 @@
 require("../includes/auth.php");
 require("../includes/db.php");
 $fname = $_SESSION['fname'];
+$lname = $_SESSION['lname'];
 $uid = $_SESSION['uid'];
 $articleCount=0;
 $answerCount=0;
+$res = mysqli_query($con, "SELECT phoneNumber, village, dist, state, email FROM account WHERE uid=$uid");
+$row = mysqli_fetch_array($res);
+$phone = $row['phoneNumber'];
+$email = $row['email'];
+$village = $row['village'];
+$district = $row['dist'];
+$state = $row['state'];
 $questionCount=0;
 $upCount = 0;
 $downCount = 0;
@@ -36,16 +44,18 @@ if($res){
 <html lang="en">
 <head>
     <style type="text/css">
-        body, html {
-  height: 100%;
-}
-.bg {
-  background-image: linear-gradient(to right top, #ff6600, #ff3f6c, #f052b7, #a376e6, #128deb);
-  height: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
+    body, html {
+      height: fill;
+      min-height: 100%;
+    }
+    .bg {
+      background-image: linear-gradient(to right bottom, #051937, #004872, #007d9e, #00b5b1, #12eba9);
+      height: fill;
+      min-height: 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
    </style>
   <title>Dashboard</title>
   <meta charset="utf-8">
@@ -87,8 +97,23 @@ if($res){
 </nav>
 <br><br><br><br>
 <div class="container">
+
 <div class="card">
-  <div class="card-header"><h3><?php echo "$fname"?>'s Profile</h3></div>
+  <div class="card-header"><h3>Your Profile</h3></div>
+  <div class="card-body">
+    <table class="table table-striped">
+    <tr><td>Name</td><td><?php echo $fname." ".$lname;?></td></tr>
+    <tr><td>Phone</td><td><?php echo $phone;?></td></tr>
+    <tr><td>E-mail</td><td><?php echo $email;?></td></tr>
+    <tr><td>Village</td><td><?php echo $village;?></td></tr>
+    <tr><td>District</td><td><?php echo $district;?></td></tr>
+    <tr><td>State</td><td><?php echo $state;?></td></tr>
+    </table>
+  </div>
+</div>
+<br>
+<div class="card" style="margin-bottom: 20px;">
+  <div class="card-header"><h3>Activity on TFH</h3></div>
   <div class="card-body">
     <table class="table table-striped">
     <tr><td>Article posts</td><td><?php echo $articleCount;?></td></tr>

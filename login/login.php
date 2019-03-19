@@ -15,7 +15,7 @@ if(isset($_POST['email'])){
     $result = mysqli_query($con,$query) or die(mysql_error());
     
     $rows = mysqli_num_rows($result);
-    if($rows==1){
+    if($rows!=0){
         $_SESSION['email'] = $email;
         $userRes = mysqli_fetch_array($result);
         $username = $userRes['username'];
@@ -24,6 +24,7 @@ if(isset($_POST['email'])){
         $detailRes = mysqli_query($con, $detailQuery) or die(mysqli_error($con));
         while ($detailRow = mysqli_fetch_array($detailRes, MYSQLI_BOTH)) {
             $_SESSION['fname'] = $detailRow['fname'];
+            $_SESSION['lname'] = $detailRow['lname'];
             $_SESSION['uid'] = $detailRow['uid'];
         }
         header("Location: ../dashboard/dashboard.php");
@@ -43,11 +44,12 @@ if(isset($_POST['email'])){
 
 <style type="text/css">
         body, html {
-  height: 100%;
+          height: fill;
+          min-height: 100%;
 }
 .bg {
   background-image: linear-gradient(to right bottom, #051937, #004872, #007d9e, #00b5b1, #12eba9);
-  height: 100%;
+  min-height: 100%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

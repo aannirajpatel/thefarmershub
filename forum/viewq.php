@@ -55,12 +55,14 @@ $postingUser = $row['uid'];
 <html lang="en">
   <head>
     <style type="text/css">
-      body, html {
-        height: fill;
+      body, html, .bg {
+      	height: fill;
+        min-height: 100%;
       }
       .bg {
-        background-image: linear-gradient(to right top, #ff6600, #ff3f6c, #f052b7, #a376e6, #128deb);
-        height: fill;
+        background-image: linear-gradient(to right bottom, #051937, #004872, #007d9e, #00b5b1, #12eba9);
+        /*background-image: linear-gradient(to right top, #ff6600, #ff3f6c, #f052b7, #a376e6, #128deb);*/
+        min-height: 100%;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
@@ -68,9 +70,9 @@ $postingUser = $row['uid'];
     </style>
     <title>Viewing Question
     </title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js">
@@ -81,24 +83,73 @@ $postingUser = $row['uid'];
     </script>
     <script type="text/javascript">
     	function aupvote(q,u){
-    		var auddata = "uid="+toString(u)+"&qno="+toString(q);
+    		var auddata = "auid="+u+"&q="+q+"&vuid="+ <?php echo $uid;?> ;
+    		var myidUp = "#btnup" + u + q;
+			var myidDown = "#btndown" + u + q;
+			var myidUpCounter = "#upCounter"+u+q;
+			var myidDownCounter = "#downCounter"+u+q;
     		$.ajax({
 			      type: "POST",
 			      url: "aupdown.php",
 			      data: auddata + "&vote=Upvote",
 			      success: function(data) {
 			       if(data=="Resetted"){
-		 	        	$("#btnup"+toString(u)+toString(q)).attr("style","background: white;");
-			        	$("#btndown"+toString(u)+toString(q)).attr("style","background: white;");
+/*		 	        	$(myidUp).attr("style","background: white;");
+			        	$(myidDown).attr("style","background: white;");*/
+			        	var x = parseInt($(myidUpCounter).text());
+			        	x = x-1;
+			        	$(myidUpCounter).text(x);
+			        	console.log(x);
+			        	location.reload();
 			        }
 			        if(data=="Upvoted"){
-		 	        	$("#btnup"+toString(u)+toString(q)).attr("style","background: green;");
-			        	$("#btndown"+toString(u)+toString(q)).attr("style","background: white;");
+		 	        	/*$(myidUp).attr("style","background: green;");
+			        	$(myidDown).attr("style","background: white;");*/
+			        	var x = parseInt($(myidUpCounter).text());
+			        	x = x+1;
+			        	$(myidUpCounter).text(x);
+			        	console.log(x);
+			        	location.reload();
 			        }
 			        console.log(data);
 			      }
 			    });
     	};
+
+    	function adownvote(q,u){
+    		var auddata = "auid="+u+"&q="+q+"&vuid="+ <?php echo $uid;?> ;
+    		var myidUp = "#btnup" + u + q;
+			var myidDown = "#btndown" + u + q;
+			var myidUpCounter = "#upCounter"+u+q;
+			var myidDownCounter = "#downCounter"+u+q;
+    		$.ajax({
+			      type: "POST",
+			      url: "aupdown.php",
+			      data: auddata + "&vote=Downvote",
+			      success: function(data) {
+			       if(data=="Resetted"){
+		 	        	/*$(myidUp).attr("style","background: white;");
+			        	$(myidDown).attr("style","background: white;");*/
+			        	var x = parseInt($(myidDownCounter).text());
+			        	x = x-1;
+			        	$(myidDownCounter).text(x);
+			        	console.log(x);
+			        	location.reload();
+			        }
+			        if(data=="Downvoted"){
+		 	        	/*$(myidUp).attr("style","background: white;");
+			        	$(myidDown).attr("style","background: red;");*/
+			        	var x = parseInt($(myidDownCounter).text());
+			        	x = x+1;
+			        	$(myidDownCounter).text(x);
+			        	console.log(x);
+			        	location.reload();
+			        }
+			        console.log(data);
+			      }
+			    });
+    	};
+
     	var data = "uid=" + <?php echo '"'.$uid.'"' ?> + "&q=" + <?php echo '"'.$qno.'"' ?> ;
     	var udsituation = <?php echo '"'.$udsituation.'"';?>;
     	console.log(udsituation);
@@ -250,22 +301,31 @@ $postingUser = $row['uid'];
       				<?php
       				  $qry = "SELECT * FROM answer WHERE qno=$qno ORDER BY (aupcount-adowncount) DESC, atimestamp DESC";
       				  $res = mysqli_query($con, $qry) or die(mysqli_error($con));
-      				  if(!$res){
+      				  if($res==false||mysqli_num_rows($res)==0){
       				?>
       				  <tr><td>---</td><td>No answers yet...</td><td>---</td><td>-</td><td>-</td>
       				<?php
       				  }
       				  else{
       				  	while($row = mysqli_fetch_assoc($res)){
-                  $qry = "SELECT fname, lname FROM account WHERE uid=".$row['uid'];
+                  $qry = "SELECT username FROM account WHERE uid=".$row['uid'];
                   $res2 = mysqli_query($con, $qry) or die(mysqli_error($con));
                   $r = mysqli_fetch_array($res2);
                   echo "<tr>
-                      <td>".$r['fname']." ".$r['lname']."</td>
+                      <td>".$r['username']."</td>
       								<td>".$row['atext']."</td>
-      								<td>".$row['atimestamp']."</td>
-      								<td style='color: green;'>".$row['aupcount'].'<button class="btn btn-default" id="btnup'.$row['uid'].$row['qno'].'"><span onclick="aupvote('.$row['qno'].','.$row['uid'].')" data-vi="angle-top" data-vi-size="20"></span></button>'."</td>
-      								<td style='color: red;'>".$row['adowncount'].'<button class="btn btn-default" id="btndown'.$row['uid'].$row['qno'].'"><span onclick="adownvote('.$row['qno'].','.$row['uid'].')" data-vi="angle-bottom" data-vi-size="20"></span></button>'."</td>
+      								<td>".$row['atimestamp']."</td>";
+      			  if($canAnswer){
+      			  echo "
+      								<td style='color: green;' id='upCounter'>".'<span id="upCounter'.$row['uid'].$row['qno'].'">'.$row['aupcount'].'</span>'.'<button class="btn btn-default" id="btnup'.$row['uid'].$row['qno'].'" '.'onclick="aupvote('.$row['qno'].','.$row['uid'].')"'.'><span data-vi="angle-top" data-vi-size="20"></span></button></td>'.
+      								"<td style='color: red;'>".'<span id="downCounter'.$row['uid'].$row['qno'].'">'.$row['adowncount'].'</span>'.'<button class="btn btn-default" id="btndown'.$row['uid'].$row['qno'].'" '.'onclick="adownvote('.$row['qno'].','.$row['uid'].')"'.'><span data-vi="angle-bottom" data-vi-size="20"></span></button></td>';
+      							}
+      			else{
+      				echo "<td style='color:green;'>".$row['aupcount']."</td>";
+      				echo "<td style='color:red;'>".$row['adowncount']."</td>";
+      			}
+      			  echo "</td>
+      								
       							</tr>";
       				  	}
       				  }

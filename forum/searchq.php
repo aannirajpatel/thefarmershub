@@ -13,10 +13,12 @@ $query = $_REQUEST['search'];
     <style type="text/css">
       body, html {
         height: fill;
+        min-height: 100%;
       }
       .bg {
         background-image: linear-gradient(to right top, #ff6600, #ff3f6c, #f052b7, #a376e6, #128deb);
         height: fill;
+        min-height: 100%;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
@@ -71,7 +73,7 @@ $query = $_REQUEST['search'];
         </div>
         <div class = "card-body">
       			<table class="table">
-      				<thead><th>User</th><th>Question</th><th>Timestamp</th><th>Answers</th><th>Upvotes</th><th>Downvotes</th></thead>
+      				<thead><th>User</th><th>Question</th><th>Time Posted</th><th>Answers</th><th>Upvotes</th><th>Downvotes</th></thead>
       				<?php
       				  $raw_results = mysqli_query($con,"SELECT * FROM question WHERE (LOWER(qtext) LIKE '%".strtolower($query)."%') ORDER BY qupcount-qdowncount DESC") or die(mysql_error());
 					  if(!$raw_results){
@@ -84,10 +86,10 @@ $query = $_REQUEST['search'];
 							    $qryans = "SELECT count(*) AS cans FROM answer WHERE qno=".$row['qno'];
                   $res = mysqli_query($con, $qryans);
                   $rowans = mysqli_fetch_array($res);
-                  $qryname = "SELECT fname, lname FROM account WHERE uid=".$row['uid'];
+                  $qryname = "SELECT username FROM account WHERE uid=".$row['uid'];
                   $resname = mysqli_query($con, $qryname);
                   $nameans = mysqli_fetch_array($resname);
-                  $name=$nameans['fname']." ".$nameans['lname'];
+                  $name=$nameans['username'];
       						echo "
       							<tr>
       								<td>".$name."</td>

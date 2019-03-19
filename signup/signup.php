@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST" && isset($_POST['fname']))
     $state = stripslashes($_REQUEST['state']);
     $state = mysqli_real_escape_string($con,$state);
 
-    $query = "SELECT * FROM account WHERE (username='$username' AND email='$email')";
+    $query = "SELECT * FROM account WHERE email='$email'";
 
     $result = mysqli_query($con, $query);
 
@@ -152,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST" && isset($_POST['fname']))
 <div class="container">
 <div class="row"></div>
     <aside class="col-sm-9">
-<div class="card">
+<div class="card" style="margin-bottom: 20px;">
 <article class="card-body">
 <a href="../login/login.php" class="float-right btn btn-outline-primary">Login</a>
 <h4 class="card-title mb-4 mt-1">Sign Up</h4>
@@ -191,7 +191,6 @@ if ($_SERVER['REQUEST_METHOD']=="POST" && isset($_POST['fname']))
                     <label for="phoneNumber" class="col-sm-3 control-label">Phone number </label>
                     <div class="col-sm-9">
                         <input type="phoneNumber" name="phoneNumber" placeholder="Phone number" class="form-control">
-                        <span style="padding-top: 2px;" class="help-block">&nbsp;Your phone number won't be disclosed anywhere </span>
                     </div>
                 </div>
                <div class="form-group">
@@ -225,7 +224,8 @@ if ($_SERVER['REQUEST_METHOD']=="POST" && isset($_POST['fname']))
                         <span class="help-block">&nbsp;All fields are required. </span>
                     </div>
                 </div>
-                <input type="submit" class="btn btn-primary btn-block">
+                <br>
+                <input type="submit" class="btn btn-success btn-block">
 </form>
 </article>
 </div>
