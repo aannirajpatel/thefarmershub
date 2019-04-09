@@ -1,16 +1,16 @@
 <?php
 session_start();
 //require('../includes/auth.php');
-if(!isset($_REQUEST['q'])){
-header('Location: ../forum/forum.php');
+if(!isset($_REQUEST['articleid'])){
+header('Location: ../articles/articles.php');
 }
 require("../includes/db.php");
-$qno = $_REQUEST['q'];
-$canAnswer = 0;
+$articleid = $_REQUEST['articleid'];
+$canComment = 0;
 if(isset($_SESSION["uid"])){
-$canAnswer=1;
+$canComment=1;
 $uid = $_SESSION['uid'];
-$udqry = "SELECT * FROM qupdown WHERE qno=$qno AND uid=$uid";
+$udqry = "SELECT * FROM articleupdown WHERE articleid= $articleid AND uid= $uid";
 $udres = mysqli_query($con, $udqry);
 if($udres!=false && mysqli_num_rows($udres)>0){
 $udrow = mysqli_fetch_assoc($udres);
@@ -32,15 +32,16 @@ $udsituation = "Resetted";
 }
 }
 else{
-$canAnswer=0;
+$canComment=0;
 }
-$qry = "SELECT qtext,uid FROM question WHERE qno = $qno";
+$qry = "SELECT `text`,topic,uid FROM article WHERE articleid = $articleid";
 $res = mysqli_query($con, $qry) or die(mysqli_error($con));
 if(mysqli_num_rows($res) == 0){
 header('Location: ../error404.php');
 }
 $row = mysqli_fetch_array($res);
-$qtext = $row['qtext'];
+$topic= $row['topic'];
+$text = $row['text'];
 $postingUser = $row['uid'];
 ?>
 <!DOCTYPE html>
@@ -59,11 +60,11 @@ $postingUser = $row['uid'];
         background-repeat: no-repeat;
         background-size: cover;
       }
-      #qno{
+      #articleid{
       	display: none;
       }
     </style>
-    <title>Viewing Question
+    <title>View Article
     </title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -76,7 +77,7 @@ $postingUser = $row['uid'];
     </script>
     <script src="https://cdn.jsdelivr.net/npm/vivid-icons@1.0.9" type="text/javascript">
     </script>
-    <script src="./js/forumupdown.js" type="text/javascript">
+    <script src="./js/articleupdown.js" type="text/javascript">
     </script>
     <script type="text/javascript">
 		function googleTranslateElementInit() {
@@ -88,7 +89,7 @@ $postingUser = $row['uid'];
 
   </head>
   <body class="bg">
-  	<p id='qno'><?php echo $qno;?></p>
+  	<p id='articleid'><?php echo $articleid;?></p>
     <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
       <a class="navbar-brand" href="#">TFH
       </a>
@@ -98,16 +99,16 @@ $postingUser = $row['uid'];
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <?php if($canAnswer){ ?>
+          <?php if($canComment){ ?>
           <li class="nav-item">
             <a class="nav-link" href="../dashboard/dashboard.php">Dashboard
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../articles/articles.php">Articles
+            <a class="nav-link active" href="../articles/articles.php">Articles
             </a>
           </li>
-          <li class="nav-item active">
+          <li class="nav-item">
             <a class="nav-link" href="../forum/forum.php">Forums
             </a>
           </li>
@@ -132,10 +133,10 @@ else{
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../articles/articles.php">Articles
+            <a class="nav-link active" href="../articles/articles.php">Articles
             </a>
           </li>
-          <li class="nav-item active">
+          <li class="nav-item">
             <a class="nav-link" href="../forum/forum.php">Forums
             </a>
           </li>
@@ -147,7 +148,7 @@ else{
         </ul>
       </div>
       <form class="form-inline my-2 my-lg-0" style="float:right;" action="searchq.php" method="get">
-        <input class="form-control mr-sm-2" style="width: 300px" name="search" type="search" placeholder="Search for any question" aria-label="Search">
+        <input class="form-control mr-sm-2" style="width: 300px" name="search" type="search" placeholder="Search for any article" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search
         </button>
       </form>
@@ -158,7 +159,7 @@ else{
     <div class="container">
       <div class="card">
         <div class = "card-header">
-          Question by 
+          Topic "<?php echo $topic;?>", by  
           <i>
             <?php
 $qry = "SELECT * FROM account WHERE uid=$postingUser";
@@ -169,25 +170,26 @@ echo $row['fname']." ".$row['lname'];
           </i>
         </div>
         <div class = "card-body">
-          <?php echo $qtext;
-if($canAnswer==1){
+          <?php echo nl2br($text);
+if($canComment==1){
 ?>
           <br>
           <span style="float: left;">
+            <button class="btn btn-default">
+              <a style="text-decoration: none;" href= 
+                 <?php echo "createcomment.php?articleid=".$articleid; ?>>
+              <i data-vi="chat" data-vi-size="30">
+              </i>
+              </a>
+            </button>
           <span id="udformcover">
-            <button class="btn btn-default" id="upvote" title="Upvote this question">
+            <button class="btn btn-default" id="upvote">
               <?php echo $uvs ?>
             </button>
-            <button class="btn btn-default" id="downvote" title="Downvote this question">
+            <button class="btn btn-default" id="downvote">
               <?php echo $dvs ?>
             </button>
           </span>
-          <button class="btn btn-default">
-              <a style="text-decoration: none;" href= 
-                 <?php echo "createanswer.php?q=".$qno; ?>>
-              Answer this question
-              </a>
-            </button>
           </span>
         <br>
         <?php
@@ -198,9 +200,9 @@ if($canAnswer==1){
           <thead>
             <th>User
             </th>
-            <th>Answer
+            <th>Comment
             </th>
-            <th>Timestamp
+            <th>Posted On
             </th>
             <th>Upvotes
             </th>
@@ -208,14 +210,14 @@ if($canAnswer==1){
             </th>
           </thead>
           <?php
-$qry = "SELECT * FROM answer WHERE qno=$qno ORDER BY (aupcount-adowncount) DESC, atimestamp DESC";
+$qry = "SELECT * FROM comment WHERE articleid=$articleid ORDER BY (cupcount-cdowncount) DESC, ctimestamp DESC";
 $res = mysqli_query($con, $qry) or die(mysqli_error($con));
 if($res==false||mysqli_num_rows($res)==0){
 ?>
           <tr>
             <td>---
             </td>
-            <td>No answers yet...
+            <td>No comments yet...
             </td>
             <td>---
             </td>
@@ -232,26 +234,26 @@ $res2 = mysqli_query($con, $qry) or die(mysqli_error($con));
 $r = mysqli_fetch_array($res2);
 echo "<tr>
 <td>".$r['username']."</td>
-<td>".$row['atext']."</td>
-<td>".$row['atimestamp']."</td>";
-if($canAnswer){
+<td>".$row['ctext']."</td>
+<td>".$row['ctimestamp']."</td>";
+if($canComment){
 echo "
 <td style='color: green;'>
-<span>".$row['aupcount']."</span>
-<button class='btn btn-default' onclick='answerUpvote(".$row['aid'].")'>
+<span>".$row['cupcount']."</span>
+<button class='btn btn-default' onclick='commentUpvote(".$row['commentid'].")'>
 <span data-vi='angle-top' data-vi-size='20'></span>
 </button>
 </td>
 <td style='color: red;'>
-<span>".$row['adowncount']."</span>
-<button class='btn btn-default' onclick='answerDownvote(".$row['aid'].")'>
+<span>".$row['cdowncount']."</span>
+<button class='btn btn-default' onclick='commentDownvote(".$row['commentid'].")'>
 <span data-vi='angle-bottom' data-vi-size='20'></span>
 </button>
 </td>";
 }
 else{
-echo "<td style='color:green;'>".$row['aupcount']."</td>";
-echo "<td style='color:red;'>".$row['adowncount']."</td>";
+echo "<td style='color:green;'>".$row['cupcount']."</td>";
+echo "<td style='color:red;'>".$row['cdowncount']."</td>";
 }
 echo "</td>
 </tr>";

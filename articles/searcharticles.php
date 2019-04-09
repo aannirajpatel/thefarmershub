@@ -24,7 +24,7 @@ $query = $_REQUEST['search'];
         background-size: cover;
       }
     </style>
-    <title>Viewing Question
+    <title>Search Articles
     </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,39 +44,18 @@ $query = $_REQUEST['search'];
 	  </button>
 	  <div class="collapse navbar-collapse" id="navbarNav">
 		<ul class="navbar-nav">
-<?php if(isset($_SESSION['uid'])){ ?>
 		  <li class="nav-item">
 			<a class="nav-link" href="../dashboard/dashboard.php">Dashboard</a>
 		  </li>
 		  <li class="nav-item">
-			<a class="nav-link" href="../articles/articles.php">Articles</a>
+			<a class="nav-link active" href="../articles/articles.php">Articles</a>
 		  </li>
-		  <li class="nav-item active">
+		  <li class="nav-item">
 			<a class="nav-link" href="../forum/forum.php">Forums</a>
 		  </li>
 		  <li class="nav-item">
-			<a class="nav-link" href="../statistics/statistics.php">Statistics</a>
+			<a class="nav-link" href="#">Statistics</a>
 		  </li>
-      <li class="nav-item">
-      <a class="nav-link" href="../logout/logout.php">Logout</a>
-      </li>
-<?php } else{?>
-      <li class="nav-item">
-      <a class="nav-link" href="../login/login.php">Login</a>
-      </li>
-      <li class="nav-item">
-      <a class="nav-link" href="../signup/signup.php">Sign Up</a>
-      </li>
-      <li class="nav-item">
-      <a class="nav-link" href="../articles/articles.php">Articles</a>
-      </li>
-      <li class="nav-item active">
-      <a class="nav-link" href="../forum/forum.php">Forums</a>
-      </li>
-      <li class="nav-item">
-      <a class="nav-link" href="../statistics/statistics.php">Statistics</a>
-      </li>
-<?php } ?>
 		</ul>
 	  </div>
 		<form class="form-inline my-2 my-lg-0" style="float:right;" action="searchq.php" method="get">
@@ -96,7 +75,7 @@ $query = $_REQUEST['search'];
       			<table class="table">
       				<thead><th>User</th><th>Question</th><th>Time Posted</th><th>Answers</th><th>Upvotes</th><th>Downvotes</th></thead>
       				<?php
-      				  $raw_results = mysqli_query($con,"SELECT * FROM question WHERE (LOWER(qtext) LIKE '%".strtolower($query)."%') ORDER BY qupcount-qdowncount DESC") or die(mysql_error());
+      				  $raw_results = mysqli_query($con,"SELECT * FROM article WHERE (LOWER(`text`) LIKE '%".strtolower($query)."%') OR  (LOWER(`topic`) LIKE '%".strtolower($query)."%') ORDER BY upcount-downcount DESC, timestamp DESC") or die(mysql_error());
 					  if(!$raw_results){
       				?>
       				  <tr><td>---</td><td>No results to show...</td><td>---</td><td>-</td><td>-</td>

@@ -1,76 +1,70 @@
 <?php
+$con = mysqli_connect("localhost", "root", "", "thefarmershub");
 
-$con = mysqli_connect("localhost","root","","thefarmershub");
-
-if (mysqli_connect_errno())
-  {
-  echo "Failed to connect to MySQL: " . mysqli_connect_error();
-  }
+if (mysqli_connect_errno()) {
+    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+}
 
 $done = 0;
 $success = 0;
 
-if ($_SERVER['REQUEST_METHOD']=="POST" && isset($_POST['fname']))
-{
+if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['fname'])) {
 
     $fname = $_POST['fname'];
-    $fname = mysqli_real_escape_string($con,$fname);
-    
+    $fname = mysqli_real_escape_string($con, $fname);
+
     $lname = stripslashes($_REQUEST['lname']);
-    $lname = mysqli_real_escape_string($con,$lname);
-    
+    $lname = mysqli_real_escape_string($con, $lname);
+
     $username = stripslashes($_REQUEST['username']);
-    $username = mysqli_real_escape_string($con,$username);
+    $username = mysqli_real_escape_string($con, $username);
 
     $email = stripslashes($_REQUEST['email']);
-    $email = mysqli_real_escape_string($con,$email);
-    
+    $email = mysqli_real_escape_string($con, $email);
+
     $password = stripslashes($_REQUEST['password']);
-    $password = mysqli_real_escape_string($con,$password);
-    
+    $password = mysqli_real_escape_string($con, $password);
+
     $phoneNumber = stripslashes($_REQUEST['phoneNumber']);
-    $phoneNumber = mysqli_real_escape_string($con,$phoneNumber);
-    
+    $phoneNumber = mysqli_real_escape_string($con, $phoneNumber);
+
     $language = stripslashes($_REQUEST['language']);
-    $language = mysqli_real_escape_string($con,$language);
+    $language = mysqli_real_escape_string($con, $language);
 
     $village = stripslashes($_REQUEST['village']);
-    $village = mysqli_real_escape_string($con,$village);
-    
+    $village = mysqli_real_escape_string($con, $village);
+
     $dist = stripslashes($_REQUEST['dist']);
-    $dist = mysqli_real_escape_string($con,$dist);
-    
+    $dist = mysqli_real_escape_string($con, $dist);
+
     $state = stripslashes($_REQUEST['state']);
-    $state = mysqli_real_escape_string($con,$state);
+    $state = mysqli_real_escape_string($con, $state);
 
     $query = "SELECT * FROM account WHERE email='$email'";
 
     $result = mysqli_query($con, $query);
 
-    if($result==false||mysqli_num_rows($result)==0){
-    $query = "INSERT INTO account(fname,lname,username,email,password,phoneNumber,language,village,dist,state) 
-        VALUES ('$fname', '$lname', '$username', '$email', '".md5($password)."', '$phoneNumber', '$language', '$village', '$dist', '$state')";
-    
-    $result = mysqli_query($con,$query);
-    
-    $done = 1;
+    if ($result == false || mysqli_num_rows($result) == 0) {
+        $query = "INSERT INTO account(fname,lname,username,email,password,phoneNumber,language,village,dist,state) 
+        VALUES ('$fname', '$lname', '$username', '$email', '" . md5($password) . "', '$phoneNumber', '$language', '$village', '$dist', '$state')";
 
-      if($result){
-        $success = 1;
-      }
-	  }
-	else{
-        $done=1;
-		    $success = 0;
-	}
+        $result = mysqli_query($con, $query);
 
+        $done = 1;
+
+        if ($result) {
+            $success = 1;
+        }
+    }
+    else {
+        $done = 1;
+        $success = 0;
+    }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <style type="text/css">
         body, html {
   height: fill;
@@ -98,9 +92,6 @@ if ($_SERVER['REQUEST_METHOD']=="POST" && isset($_POST['fname']))
   });
 </script>
 </head>
-
-
-
 <body class="bg">
 <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
   <a class="navbar-brand" href="#">TFH</a>
@@ -144,8 +135,6 @@ if ($_SERVER['REQUEST_METHOD']=="POST" && isset($_POST['fname']))
                 <h2 style="color:white">Sign Up for The Farmer's Hub</h2>
             </form>
         </div> 
-
-
 <div class="container">
 <hr>
 </div>
@@ -217,8 +206,6 @@ if ($_SERVER['REQUEST_METHOD']=="POST" && isset($_POST['fname']))
                         <input type="text" name="state" placeholder="State" class="form-control">
                     </div>
                 </div>
- 
-
                 <div class="form-group">
                     <div class="col-sm-9 col-sm-offset-3">
                         <span class="help-block">&nbsp;All fields are required. </span>

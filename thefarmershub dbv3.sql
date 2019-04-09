@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 19, 2019 at 07:53 PM
+-- Generation Time: Mar 22, 2019 at 10:53 AM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -151,10 +151,10 @@ CREATE TABLE `question` (
 --
 
 INSERT INTO `question` (`uid`, `qno`, `qtext`, `qtimestamp`, `qupcount`, `qdowncount`) VALUES
-(57, 2, 'How often should wheat crops be watered in a week?', '2019-03-19 22:49:35', 1, 0),
+(57, 2, 'How often should wheat crops be watered in a week?', '2019-03-20 00:41:25', 0, 1),
 (57, 16, 'How often should barley crops be watered in a week?', '2019-03-19 22:49:48', 0, 1),
 (57, 18, 'How much fertilizer should I use for Wheat crops?', '2019-03-14 01:16:42', 0, 0),
-(57, 19, 'Which company\'s seeds should I use for best harvest of Wheat?', '2019-03-19 22:49:27', 1, 0);
+(57, 19, 'Which company\'s seeds should I use for best harvest of Wheat?', '2019-03-20 15:55:02', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -174,7 +174,7 @@ CREATE TABLE `qupdown` (
 
 INSERT INTO `qupdown` (`uid`, `qno`, `ud`) VALUES
 (57, 19, 1),
-(57, 2, 1),
+(57, 2, 0),
 (57, 16, 0);
 
 -- --------------------------------------------------------
@@ -236,7 +236,7 @@ ALTER TABLE `statistics`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `uid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `uid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `article`

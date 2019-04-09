@@ -1,14 +1,14 @@
 <?php
 require("../includes/auth.php");
 include("../includes/db.php");
-if(!isset($_REQUEST['q'])){
+if(!isset($_REQUEST['articleid'])){
 	header('../dashboard/dashboard.php');
 }
-$qno = $_REQUEST['q'];
-$qry = "SELECT * FROM question WHERE qno=$qno";
+$articleid = $_REQUEST['articleid'];
+$qry = "SELECT * FROM article WHERE articleid=$articleid";
 $res = mysqli_query($con,$qry) or die(mysqli_error());
 $row = mysqli_fetch_array($res);
-$qtext = $row['qtext'];
+$topic = $row['topic'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +26,7 @@ $qtext = $row['qtext'];
 		background-size: cover;
 		}
 		</style>
-		<title>Add answer</title>
+		<title>Write comment</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
@@ -46,32 +46,32 @@ $qtext = $row['qtext'];
         <a class="nav-link" href="../dashboard/dashboard.php">Dashboard</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="../articles/articles.php">Articles</a>
+        <a class="nav-link active" href="../articles/articles.php">Articles</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link active" href="../forum/forum.php">Forums</a>
+        <a class="nav-link" href="../forum/forum.php">Forums</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="../statistics/statistics.php">Statistics</a>
+        <a class="nav-link" href="#">Statistics</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="../logout/logout.php">Logout</a>
       </li>
     </ul>
   </div>
-    <form class="form-inline my-2 my-lg-0" style="float:right;" action="../forum/searchq.php" method="get">
-      <input class="form-control mr-sm-2" name="search" style="width: 300px" type="search" placeholder="Search for any question" aria-label="Search">
+    <form class="form-inline my-2 my-lg-0" style="float:right;" action="../forum/searcharticles.php" method="get">
+      <input class="form-control mr-sm-2" name="search" style="width: 300px" type="search" placeholder="Search for any article" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
 </nav>
 <br><br><br><br>
 		<div class="container">
 				<div class="card">
-					<div class="card-header">Question: <?php echo $qtext;?></div>
+					<div class="card-header">Comment on the article on topic "<?php echo $topic;?>"</div>
 					<div class="card-body">
-						<form class="form-horizontal" action="adda.php" method="POST">
-							<textarea class="form-control" rows="5" cols = 50 id="comment" name="answer" placeholder="Write your answer here"></textarea><br>
-							<input type="hidden" name="q" <?php echo 'value="'.$qno.'"';?> />
+						<form class="form-horizontal" action="addcomment.php" method="POST">
+							<textarea class="form-control" rows="5" cols = 50 id="comment" name="comment" placeholder="Write your comment here"></textarea><br>
+							<input type="hidden" name="articleid" <?php echo 'value="'.$articleid.'"';?> />
 						<input type="submit" value="Submit" />
 						</form>
 					</div>

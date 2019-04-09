@@ -1,11 +1,13 @@
 <?php
 require("../includes/auth.php");
 require("../includes/db.php");
-$question=$_REQUEST['q'];
-$question=htmlspecialchars($question);
-$question=mysqli_real_escape_string($con,$question);
+$text=$_REQUEST['text'];
+$topic=$_REQUEST['topic'];
+if($topic==""||$text==""){echo "Cannot create empty article"; die();}
+$text=htmlspecialchars($text);
+$text=mysqli_real_escape_string($con,$text);
 $uid = $_SESSION['uid'];
-$sql="INSERT INTO question(qtext,uid) VALUES('$question',$uid)";
+$sql="INSERT INTO article(`text`,topic,uid) VALUES( '$text', '$topic', $uid)";
 $result=mysqli_query($con,$sql);
 ?>
 <!DOCTYPE html>
@@ -14,18 +16,16 @@ $result=mysqli_query($con,$sql);
     <style type="text/css">
         body, html {
   height: fill;
-  min-height: 100%;
 }
 .bg {
   background-image: linear-gradient(to right bottom, #051937, #004872, #007d9e, #00b5b1, #12eba9);
   height: fill;
-  min-height: 100%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
    </style>
-  <title>Create question</title>
+  <title>Write an article</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
@@ -42,10 +42,10 @@ $result=mysqli_query($con,$sql);
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link active" href="../dashboard/dashboard.php">Dashboard</a>
+        <a class="nav-link" href="../dashboard/dashboard.php">Dashboard</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="../articles/articles.php">Articles</a>
+        <a class="nav-link active" href="../articles/articles.php">Articles</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="../forum/forum.php">Forums</a>
@@ -70,10 +70,10 @@ $result=mysqli_query($con,$sql);
   	<?php
   	if($result){
   		echo 'Done!';
-  		$sql = "SELECT MAX(qno) AS q FROM question WHERE uid=$uid";
+  		$sql = "SELECT MAX(articleid) AS articleid FROM article WHERE uid=$uid";
   		$res = mysqli_query($con,$sql);
   		$res = mysqli_fetch_array($res);
-  		$qno = $res['q'];
+  		$articleid = $res['articleid'];
   	}
   	else{
   		echo 'Error';
@@ -85,10 +85,10 @@ $result=mysqli_query($con,$sql);
   	<?php
 
 	if($result){
-	echo 'Your question has been created. Click <a href="../forum/viewq.php?q='.$qno.'">here</a> to view your question.';
+	echo 'Your article has been posted. Click <a href="../articles/viewarticle.php?articleid='.$articleid.'">here</a> to view your article.';
 	}
 	else {
-	echo "We were unable to post your question. Please try again later.".mysqli_error($con);
+	echo "We were unable to post your article. Please try again later.".mysqli_error($con);
 	}
 	mysqli_close($con);
 	?>

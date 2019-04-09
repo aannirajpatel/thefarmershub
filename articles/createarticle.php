@@ -1,32 +1,24 @@
 <?php
 require("../includes/auth.php");
-include("../includes/db.php");
-if(!isset($_REQUEST['q'])){
-	header('../dashboard/dashboard.php');
-}
-$qno = $_REQUEST['q'];
-$qry = "SELECT * FROM question WHERE qno=$qno";
-$res = mysqli_query($con,$qry) or die(mysqli_error());
-$row = mysqli_fetch_array($res);
-$qtext = $row['qtext'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<style type="text/css">
 		body, html {
-		height: 100%;
+		min-height: 100%;
+		height: fill;
 		}
 		.bg {
 		background-image: linear-gradient(to right bottom, #051937, #004872, #007d9e, #00b5b1, #12eba9);
-		/*background-image: linear-gradient(to right top, #ff6600, #ff3f6c, #f052b7, #a376e6, #128deb);*/
-		height: 100%;
+		height: fill;
+		min-height: 100%;
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: cover;
 		}
 		</style>
-		<title>Add answer</title>
+		<title>Write an article</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
@@ -46,10 +38,10 @@ $qtext = $row['qtext'];
         <a class="nav-link" href="../dashboard/dashboard.php">Dashboard</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="../articles/articles.php">Articles</a>
+        <a class="nav-link active" href="../articles/articles.php">Articles</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link active" href="../forum/forum.php">Forums</a>
+        <a class="nav-link" href="../forum/forum.php">Forums</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="../statistics/statistics.php">Statistics</a>
@@ -66,15 +58,17 @@ $qtext = $row['qtext'];
 </nav>
 <br><br><br><br>
 		<div class="container">
+			<form class="form-horizontal" role="form" action="addarticle.php" method="POST">
 				<div class="card">
-					<div class="card-header">Question: <?php echo $qtext;?></div>
-					<div class="card-body">
-						<form class="form-horizontal" action="adda.php" method="POST">
-							<textarea class="form-control" rows="5" cols = 50 id="comment" name="answer" placeholder="Write your answer here"></textarea><br>
-							<input type="hidden" name="q" <?php echo 'value="'.$qno.'"';?> />
-						<input type="submit" value="Submit" />
-						</form>
+					<div class="card-header">
+						<input type="text" class="form-control" placeholder="Provide a topic for your article" name="topic"/>
 					</div>
+					<div class="card-body">
+						<textarea class="form-control" rows="5" cols = 50 id="comment" name="text" placeholder="Write your article here"></textarea>
+						<br>
+						<input type="submit" name="Submit" value="Post Article" />
+					</div>
+				</form>
 			</div>
 		</div>
 	</body>

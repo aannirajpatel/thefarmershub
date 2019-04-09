@@ -1,0 +1,9 @@
+#model setup
+import pickle
+modelFileHandler = open("farmerTextClassifier.nbm", 'w')
+pickle.dump(farmerTextClassifier, filehandler)
+
+#model retrieve
+import pickle
+modelFile = open("farmerTextClassifier.nbm", 'r') 
+farmerTextClassifier = pickle.load(modelFile)

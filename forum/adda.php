@@ -1,14 +1,14 @@
 <?php
-require("../includes/auth.php");
-require("../includes/db.php");
+require ("../includes/auth.php");
+require ("../includes/db.php");
 $uid = $_SESSION['uid'];
-if(!isset($_REQUEST['answer'])){
-  header('Location: ../dashboard/dashboard.php');
+if (!isset($_REQUEST['answer'])) {
+    header('Location: ../dashboard/dashboard.php');
 }
-$answer=$_REQUEST['answer'];
+$answer = $_REQUEST['answer'];
 $qno = $_REQUEST['q'];
-$sql="INSERT INTO answer(atext,uid,qno) VALUES('$answer',$uid,$qno)";
-$result=mysqli_query($con,$sql);
+$sql = "INSERT INTO answer(atext,uid,qno) VALUES('$answer',$uid,$qno)";
+$result = mysqli_query($con, $sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,13 +49,13 @@ $result=mysqli_query($con,$sql);
         <a class="nav-link" href="../dashboard/dashboard.php">Dashboard</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Articles</a>
+        <a class="nav-link" href="../articles/articles.php">Articles</a>
       </li>
       <li class="nav-item">
         <a class="nav-link active" href="../forum/forum.php">Forums</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Statistics</a>
+        <a class="nav-link" href="../statistics/statistics.php">Statistics</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="../logout/logout.php">Logout</a>
@@ -71,27 +71,26 @@ $result=mysqli_query($con,$sql);
 <div class="container">
 <div class="card">
   <div class="card-header"><h3>
-  	<?php
-  	if($result){
-  		echo 'Done!';
-  	}
-  	else{
-  		echo 'Error';
-  	}
-  	?>
+    <?php
+if ($result) {
+    echo 'Done!';
+}
+else {
+    echo 'Error';
+}
+?>
   </h3></div>
   <div class="card-body">
 
-  	<?php
-
-	if($result){
-	echo 'Your answer has been added. Click <a href="../forum/viewq.php?q='.$qno.'">here</a> to view your answer on the question page.';
-	}
-	else {
-	echo "We were unable to post your answer. Please try again later.";
-	}
-	mysqli_close($con);
-	?>
+    <?php
+if ($result) {
+    echo 'Your answer has been added. Click <a href="../forum/viewq.php?q=' . $qno . '">here</a> to view your answer on the question page.';
+}
+else {
+    echo "We were unable to post your answer. Please try again later.";
+}
+mysqli_close($con);
+?>
 
   </div>
 

@@ -26,7 +26,7 @@ require('../includes/db.php');
   background-size: cover;
 }
    </style>
-  <title>Forums</title>
+  <title>Articles</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
@@ -47,9 +47,9 @@ require('../includes/db.php');
         <a class="nav-link" href="../dashboard/dashboard.php">Dashboard</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="../articles/articles.php">Articles</a>
+        <a class="nav-link active" href="../articles/articles.php">Articles</a>
       </li>
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href="../forum/forum.php">Forums</a>
       </li>
       <li class="nav-item">
@@ -68,9 +68,9 @@ require('../includes/db.php');
         <a class="nav-link" href="../signup/signup.php">Sign Up</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="../articles/articles.php">Articles</a>
+        <a class="nav-link active" href="../articles/articles.php">Articles</a>
       </li>
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href="../forum/forum.php">Forums</a>
       </li>
       <li class="nav-item">
@@ -79,7 +79,7 @@ require('../includes/db.php');
 	<?php } ?>
     </ul>
   </div>
-    <form class="form-inline my-2 my-lg-0" style="float:right;" action="searchq.php" method="get">
+    <form class="form-inline my-2 my-lg-0" style="float:right;" action="searcharticles.php" method="get">
       <input class="form-control mr-sm-2" name="search" style="width: 300px" type="search" placeholder="Search for any question" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
@@ -88,16 +88,18 @@ require('../includes/db.php');
 <div class="container">
 	<div class="card">
 		<div class = "card-header">
-		<h3 style="display:inline;">Top Five Questions Today</h3><h5 style="display: inline; float:right;"><a href="createquestion.php">Ask a question</a></h5>
+		<h3 style="display:inline;">Top 10 Articles Today</h3><h5 style="display: inline; float:right;"><a href="createarticle.php">Write an article here!</a></h5>
 		</div>
 		<div class = "card-body">
     <table class="table">
-      <thead><th>User</th><th>Question</th><th width="4">Timestamp</th><th>Answers</th><th>Upvotes</th><th>Downvotes</th></thead>
+      <thead><th>User</th><th>Topic</th><th width="4">Posted</th><th>Comments</th><th>Upvotes</th><th>Downvotes</th></thead>
       <?php
-        $qry = "SELECT * FROM question ORDER BY (qupcount-qdowncount) DESC, qtimestamp DESC LIMIT 5";
+        $qry = "SELECT * FROM article ORDER BY (upcount-downcount) DESC, `timestamp` DESC LIMIT 10";
         $result = mysqli_query($con, $qry) or die(mysqli_error($con));
         while($rows=mysqli_fetch_assoc($result)){
-          $qryans = "SELECT count(*) AS cans FROM answer WHERE qno=".$rows['qno'];
+          $qryans = "SELECT count(*) AS commentcount 
+          FROM comment 
+          WHERE articleid= ".$rows['articleid'];
           $res = mysqli_query($con, $qryans);
           $rowans = mysqli_fetch_array($res);
           $qryname = "SELECT username FROM account WHERE uid=".$rows['uid'];
@@ -106,11 +108,11 @@ require('../includes/db.php');
           $name=$nameans['username'];
           echo "<tr>
             <td>".$name."</td>
-            <td>".'<a href="viewq.php?q='.$rows['qno'].'">'.$rows['qtext']."</a></td>
-            <td>".$rows['qtimestamp']."</td>
-            <td style='color: blue'>".$rowans['cans']."</td>
-            <td style='color: green'>".$rows['qupcount']."</td>
-            <td style='color: red'>".$rows['qdowncount']."</td>
+            <td>".'<a href="viewarticle.php?articleid='.$rows['articleid'].'">'.$rows['topic']."</a></td>
+            <td>".$rows['timestamp']."</td>
+            <td style='color: blue'>".$rowans['commentcount']."</td>
+            <td style='color: green'>".$rows['upcount']."</td>
+            <td style='color: red'>".$rows['downcount']."</td>
             </tr>";
         }
       ?>

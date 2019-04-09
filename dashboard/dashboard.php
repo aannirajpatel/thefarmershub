@@ -16,7 +16,7 @@ $state = $row['state'];
 $questionCount=0;
 $upCount = 0;
 $downCount = 0;
-$res = mysqli_query($con, "SELECT articleid FROM articles WHERE uid=$uid");
+$res = mysqli_query($con, "SELECT articleid FROM article WHERE uid=$uid");
 if($res){
   $articleCount = mysqli_num_rows($res);
 }
@@ -28,12 +28,12 @@ $res = mysqli_query($con, "SELECT qno FROM question WHERE uid=$uid");
 if($res){
   $questionCount = mysqli_num_rows($res);
 }
-$res = mysqli_query($con, "SELECT SUM(qupcount) AS uc FROM question WHERE uid=$uid");
+$res = mysqli_query($con, "SELECT SUM(qupcount) AS uc FROM question WHERE uid= $uid");
 if($res){
   $row = mysqli_fetch_array($res);
   $upCount=$row['uc'];
 }
-$res = mysqli_query($con, "SELECT SUM(qdowncount) AS dc FROM question WHERE uid=$uid");
+$res = mysqli_query($con, "SELECT SUM(qdowncount) AS dc FROM question WHERE uid= $uid");
 if($res){
   $row = mysqli_fetch_array($res);
   $downCount=$row['dc'];
@@ -77,13 +77,13 @@ if($res){
         <a class="nav-link active" href="../dashboard/dashboard.php">Dashboard</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Articles</a>
+        <a class="nav-link" href="../articles/articles.php">Articles</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="../forum/forum.php">Forums</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Statistics</a>
+        <a class="nav-link" href="../statistics/statistics.php">Statistics</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="../logout/logout.php">Logout</a>

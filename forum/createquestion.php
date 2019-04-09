@@ -38,13 +38,13 @@ require("../includes/auth.php");
         <a class="nav-link" href="../dashboard/dashboard.php">Dashboard</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Articles</a>
+        <a class="nav-link" href="../articles/articles.php">Articles</a>
       </li>
       <li class="nav-item">
         <a class="nav-link active" href="../forum/forum.php">Forums</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Statistics</a>
+        <a class="nav-link" href="../statistics/statistics.php">Statistics</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="../logout/logout.php">Logout</a>
