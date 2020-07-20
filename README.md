@@ -1,4 +1,15 @@
-Steps to run:
+#TheFarmersHub
+>A multilingual forum with sentiment analysis for helping Indian farmers
+
+##Features!
+1. A multi-lingual QnA platform made using PHP, MySQL, Bootstrap and Google Translate API
+2. Sentiment Analysis Engine (uses a Naive Bayes classifier) written in Python
+3. Sentiment Analysis Dashboard made using Chart.js - provides stats about farmers' mental health
+
+##AI Engine Dashboard Screenshots
+Please open the pdf file in the root directory
+
+##Steps to run:
 
 1. Start XAMPP server, APACHE and MySQL services
 2. Load the database (thefarmershub dbv3.sql) into mysql
