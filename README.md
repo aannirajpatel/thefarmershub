@@ -11,9 +11,9 @@ Please open the pdf file in the root directory
 
 ## Steps to run:
 
-1. Start XAMPP server, APACHE and MySQL services
-2. Load the database (thefarmershub dbv3.sql) into mysql
-3. Run aiengine/modelTrainer.py to get the file farmerTextClassifier.nbm
-4. Start aiengine/aiengine.py
-5. Open web browser, and enter URL localhost/thefarmershub/login.php
+1. Start `XAMPP` server, `APACHE` and `MySQL` services
+2. Load the database (thefarmershub `dbv3.sql`) into `MySQL`
+3. Run `aiengine/modelTrainer.py` to get the file `farmerTextClassifier.nbm`
+4. Start `aiengine/aiengine.py` (`Python 3.6+` must be installed!)
+5. Open web browser, and enter URL `localhost/thefarmershub/login.php`
 6. ENJOY!
