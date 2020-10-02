@@ -7,7 +7,7 @@
 3. Sentiment Analysis Dashboard made using Chart.js - provides stats about farmers' mental health
 
 ## AI Engine Dashboard Screenshots
-Please open the pdf file in the root directory
+Please open the pdf file in the root directory: https://github.com/aannirajpatel/thefarmershub/blob/master/screencapture-localhost-thefarmershub-statistics-statistics-php-2019-03-24-11_09_57.pdf
 
 ## Steps to deploy
 
